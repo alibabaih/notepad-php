@@ -59,14 +59,9 @@
             <ul class="navigation">
                 <?php if (Session::get('role') != MOSCOW): ?>
                 <li>
-                    <a href="<?php echo URL; ?>dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Панель управления</span></a>
+                    <a href="<?php echo URL; ?>dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Главная</span></a>
                 </li>
-                <?php if (Session::get('role') == ADMIN): ?>
-                    <li>
-                        <a href="<?php echo URL; ?>analytics"><i class="menu-icon fa fa-eye"></i><span class="mm-text">Аналитика</span></a>
-                    </li>
 
-                <?php endif; ?>
                 <li class="mm-dropdown">
                     <a href="#"><i class="menu-icon fa fa-archive"></i><span class="mm-text">Номенклатура</span></a>
                     <ul>
@@ -83,6 +78,9 @@
                 </li>
                 <li>
                     <a href="<?php echo URL; ?>sold"><i class="menu-icon fa fa-legal"></i><span class="mm-text">Продажи продукции</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URL; ?>transaction"><i class="menu-icon fa fa-share"></i><span class="mm-text">Транзакции между офисами</span></a>
                 </li>
                 <li class="mm-dropdown">
                     <a href="#"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Закупка продукции</span></a>
@@ -115,5 +113,11 @@
                     <a href="https://docs.google.com/document/d/1Y7PyMVz7u1-NQiN1Vz23rkJKgevNrWDAeTvgvHxZd8s/edit?usp=sharing" target="_blank"><i class="menu-icon fa fa-question"></i><span class="mm-text">Памятка</span></a>
                 </li>
             </ul>
+            <?php if (Session::get('role') == ADMIN): ?>
+                <div class="menu-content">
+
+                    <a href="<?php echo URL; ?>analytics" class="btn btn-primary btn-block btn-outline dark">Аналитика</a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
