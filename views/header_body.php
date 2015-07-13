@@ -96,11 +96,21 @@
                     </ul>
                 </li>
                 <?php endif; ?>
-                <li>
-
-                        <a href="<?php echo URL; ?>sales"><i class="menu-icon fa fa-upload"></i><span class="mm-text">Склад</span></a>
-
+                <li class="mm-dropdown">
+                    <a href="#"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Склад</span></a>
+                    <ul>
+                        <li>
+                            <a tabindex="-1" href="<?php echo URL; ?>depot"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Склады в сумме</span></a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="<?php echo URL; ?>depot/mochalova"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Склад П.Мочалова</span></a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="<?php echo URL; ?>depot/oktabrskaya"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Склад Октябрьская</span></a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li>
                     <a href="https://docs.google.com/document/d/1Y7PyMVz7u1-NQiN1Vz23rkJKgevNrWDAeTvgvHxZd8s/edit?usp=sharing" target="_blank"><i class="menu-icon fa fa-question"></i><span class="mm-text">Памятка</span></a>
                 </li>

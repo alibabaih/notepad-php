@@ -134,6 +134,10 @@
                     <th class="text-center">№</th>
                     <th>Название</th>
                     <th class="text-center">Категория</th>
+
+                    <th class="text-center">Остаток товара на Мочалова</th>
+                    <th class="text-center">Остаток товара на Октябрьской</th>
+
                     <th class="text-center">Баллы</th>
                     <th class="text-center">Закупка, <i class="fa fa-eur"></i></th>
                     <th class="text-center">ИСЦ, <i class="fa fa-eur"></i></th>
@@ -158,6 +162,10 @@
                             <button class="btn btn-danger"><a style="color:white" href="'.URL.'goods/delete/'.$value['id'].'">Удалить</a></button></div>
                             </td>';
                             echo '<td class="text-center">' . $value['category'] . '</td>';
+
+                            echo '<td class="text-center">' . $value['quantity_first_Mochalova'] . '</td>';
+                            echo '<td class="text-center">' . $value['quantity_first_Oktabrskaya'] . '</td>';
+
                             echo '<td class="text-center">' . $value['point'] . '</td>';
                             echo '<td class="text-center">' . $value['purches_cost'] . ' уе.</td>';
                             echo '<td class="text-center">' . $value['isc_cost'] . ' уе.</td>';
