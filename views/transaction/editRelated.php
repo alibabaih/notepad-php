@@ -14,6 +14,7 @@
             orientation: $('body').hasClass('right-to-left') ? "auto right" : 'auto auto'
         }
         $('#bs-datepicker-example').datepicker(options);
+
     });
 
     function proverka(input) {
@@ -34,10 +35,10 @@
         <!-- Создать отчёт с проданными товарами -->
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Изменить транзакционный товар Ли Вест <?php echo $this->transaction['id']; ?></span>
+                <span class="panel-title">Изменить транзакционный сопутствующий товар</span>
             </div>
             <div class="panel-body">
-                <form method="post" action="<? echo URL; ?>transaction/editSave/<?php echo $this->transaction['id']; ?>" class="form">
+                <form method="post" action="<? echo URL; ?>transaction/editSaveRelated/<?php echo $this->transaction['id']; ?>" class="form">
                     <div class="row">
                         <div class="col-md-4">
                             <?php
@@ -46,8 +47,8 @@
                             ?>
                             <div class="form-group">
                                 <!--@TODO:  -->
-                                <label class="control-label">Дата</label>
-                                <input  type="text" name="date" id="masked-inputs-examples-date" value="<?php echo $myFormatForView; ?>" class="form-control" />
+                                <label class="control-label">Дата <?php echo $myFormatForView ?> <?php echo ' ' . $this->transaction['id']; ?></label>
+                                <input  type="text" name="date" class="form-control" value="<?php echo $myFormatForView ?>"  id="bs-datepicker-example"/>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -80,21 +81,9 @@
 
                     <div id="sold">
                         <div class="row" id="sold_item">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <select name="good_id" id="jquery-select2-example" class="form-control">
-                                        <option value="<?php echo $this->transaction['good_id']; ?>" selected><?php echo $this->transaction['name']; ?></option>
-                                        <?php
-                                        foreach ($this->getGood as $key => $value) {
-                                            echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <input type="text" name="quantity" class="form-control" value="<?php echo $this->transaction['quantity']; ?>" placeholder="Количество" onkeyup="return proverka(this);">
+                                    <input type="text" name="sum" class="form-control" value="<?php echo $this->transaction['sum']; ?>" placeholder="Сумма" onkeyup="return proverka(this);">
                                 </div>
                             </div>
                             <!--                        <div class="col-md-1">-->

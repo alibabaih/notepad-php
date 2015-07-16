@@ -21,7 +21,7 @@ class Transaction_Model extends Model {
     }
 
     function transactionRelatedList() {
-        $sth = $this->db->prepare('SELECT sum, date, items_were_send_to, items_were_send_from
+        $sth = $this->db->prepare('SELECT *
           FROM transactions_related_items
           WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
           ORDER BY date DESC');
@@ -36,7 +36,13 @@ class Transaction_Model extends Model {
     }
 
     function transactionSingleList($id) {
-        $sth = $this->db->prepare('SELECT quantity FROM transactions INNER JOIN goods WHERE id = :id AND transactions.good_id = goods.id');
+        $sth = $this->db->prepare('SELECT * FROM transactions INNER JOIN goods WHERE transactions.id = :id AND transactions.good_id = goods.id');
+        $sth->execute(array(':id' => $id));
+        return $sth->fetch();
+    }
+
+    function transactionSingleRelatedList($id) {
+        $sth = $this->db->prepare('SELECT * FROM transactions_related_items WHERE id = :id');
         $sth->execute(array(':id' => $id));
         return $sth->fetch();
     }
@@ -97,24 +103,48 @@ class Transaction_Model extends Model {
     }
 
     public function editSave($data) {
-        $sth = $this->db->prepare('UPDATE sold
+        $sth = $this->db->prepare('UPDATE transactions
             SET date = :date,
                 good_id = :good_id,
                 quantity = :quantity,
-                shop = :shop
-            WHERE id_sold = :id_sold
+                items_were_send_to = :items_were_send_to,
+                items_were_send_from = :items_were_send_from
+            WHERE id = :id
         ');
         $sth->execute(array(
-            ':id_sold' => $data['id_sold'],
+            ':id' => $data['id'],
             ':date' => $data['date'],
             ':good_id' => $data['good_id'],
             ':quantity' => $data['quantity'],
-            ':shop' => $data['shop'],
+            ':items_were_send_to' => $data['items_were_send_to'],
+            ':items_were_send_from' => $data['items_were_send_from'],
+        ));
+    }
+
+    public function editSaveRelated($data) {
+        $sth = $this->db->prepare('UPDATE transactions_related_items
+            SET date = :date,
+                sum = :sum,
+                items_were_send_to = :items_were_send_to,
+                items_were_send_from = :items_were_send_from
+            WHERE id = :id
+        ');
+        $sth->execute(array(
+            ':id' => $data['id'],
+            ':date' => $data['date'],
+            ':sum' => $data['sum'],
+            ':items_were_send_to' => $data['items_were_send_to'],
+            ':items_were_send_from' => $data['items_were_send_from'],
         ));
     }
 
     public function delete($id) {
         $sth = $this->db->prepare('DELETE from transactions WHERE id = :id');
+        $sth->execute(array(':id' => $id));
+    }
+
+    public function deleteRelated($id) {
+        $sth = $this->db->prepare('DELETE from transactions_related_items WHERE id = :id');
         $sth->execute(array(':id' => $id));
     }
 

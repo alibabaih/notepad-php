@@ -84,11 +84,12 @@ class Transaction extends Controller {
 
     function delete($id) {
         $this->model->delete($id);
-        echo '
-                <script type="text/javascript">
-                    location.replace("' . URL . 'transaction");
-                </script>
-                ';
+        header('location: ' .URL . 'transaction');
+    }
+
+    function deleteRelated($id) {
+        $this->model->deleteRelated($id);
+        header('location: ' .URL . 'transaction');
     }
 
     function edit($id) {
@@ -98,6 +99,11 @@ class Transaction extends Controller {
         $this->view->render('transaction/edit');
     }
 
+    function editRelated($id) {
+        $this->view->transaction = $this->model->transactionSingleRelatedList($id);
+        $this->view->render('transaction/editRelated');
+    }
+
 
     function editSave($id) {
         $dateGet = $_POST['date']; //04.02.15
@@ -105,17 +111,39 @@ class Transaction extends Controller {
         $mysqldate = '20' . $pieces[2] . '-' . $pieces[1] . '-' . $pieces[0];
 
         $data = array();
-        $data['id_sold'] = $id;
+        $data['id'] = $id;
         $data['date'] = $mysqldate;
         $data['good_id'] = $_POST['good_id'];
         $data['quantity'] = $_POST['quantity'];
-        $data['shop'] = $_POST['shop'];
+        $data['items_were_send_to'] = $_POST['items_were_send_to'];
+        $data['items_were_send_from'] = $_POST['items_were_send_from'];
 
         $this->model->editSave($data);
 
         echo '
                 <script type="text/javascript">
-                    location.replace("' . URL . 'sold");
+                    location.replace("' . URL . 'transaction");
+                </script>
+                ';
+    }
+
+    function editSaveRelated($id) {
+        $dateGet = $_POST['date']; //04.02.15
+        $pieces = explode(".", $dateGet);
+        $mysqldate = '20' . $pieces[2] . '-' . $pieces[1] . '-' . $pieces[0];
+
+        $data = array();
+        $data['id'] = $id;
+        $data['date'] = $mysqldate;
+        $data['sum'] = $_POST['sum'];
+        $data['items_were_send_to'] = $_POST['items_were_send_to'];
+        $data['items_were_send_from'] = $_POST['items_were_send_from'];
+
+        $this->model->editSaveRelated($data);
+
+        echo '
+                <script type="text/javascript">
+                    location.replace("' . URL . 'transaction");
                 </script>
                 ';
     }

@@ -9,11 +9,12 @@
         $("#masked-inputs-examples-date").mask("99.99.99");
 
         var options = {
-            todayBtn: "linked",
             format: 'dd.mm.yy',
             orientation: $('body').hasClass('right-to-left') ? "auto right" : 'auto auto'
         }
         $('#bs-datepicker-example').datepicker(options);
+
+        $('#bs-datepicker-example2').datepicker(options);
         var options2 = {
             format: 'dd.mm.yy',
             orientation: $('body').hasClass('right-to-left') ? "auto right" : 'auto auto'
@@ -88,7 +89,7 @@
                         <div class="form-group">
                             <!--@TODO:  -->
                             <label class="control-label">Дата</label>
-                            <input type="text" name="date" class="form-control" value="<?php echo date("d.m.y"); ?>" id="bs-datepicker-example">
+                            <input type="text" name="date" class="form-control" value="<?php echo date("d.m.y"); ?>"  id="bs-datepicker-example">
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -162,7 +163,7 @@
                         <div class="form-group">
                             <!--@TODO:  -->
                             <label class="control-label">Дата</label>
-                            <input type="text" name="date" class="form-control" value="<?php echo date("d.m.y"); ?>" id="bs-datepicker-example">
+                            <input type="text" name="date" class="form-control" value="<?php echo date("d.m.y"); ?>" id="bs-datepicker-example2">
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -182,8 +183,8 @@
                                     <!--@TODO:  -->
                                     <label class="control-label">В магазин</label>
                                     <select class="form-control" name="items_were_send_to">
-                                        <option value="Павла Мочалова">Павла Мочалова</option>
                                         <option value="Октябрьская">Октябрьская</option>
+                                        <option value="Павла Мочалова">Павла Мочалова</option>
                                     </select>
                                 </div>
                             </div>
@@ -287,8 +288,8 @@
                         <td class="text-center"><?php echo $value['items_were_send_to']; ?></td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
-                                <button type="button" class="btn"><a style="color:#555" href="<?php echo URL; ?>sold/edit/<?php echo $value['id_sold']; ?>">Изменить</a></button>
-                                <button type="button" class="btn btn-danger"><a style="color:white" href="<?php echo URL; ?>sold/delete/<?php echo $value['id_sold']; ?>" onclick="return confirm_delete()">Удалить</a></button>
+                                <button type="button" class="btn"><a style="color:#555" href="<?php echo URL; ?>transaction/editRelated/<?php echo $value['id']; ?>">Изменить</a></button>
+                                <button type="button" class="btn btn-danger"><a style="color:white" href="<?php echo URL; ?>transaction/deleteRelated/<?php echo $value['id']; ?>" onclick="return confirm_delete()">Удалить</a></button>
                             </div>
                         </td>
                     </tr>
