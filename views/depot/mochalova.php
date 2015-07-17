@@ -15,14 +15,15 @@
     </div>
     <div class="panel-body" style="overflow-x: scroll;">
         <div class="row">
-                <?php $count = 0;
-                foreach ($this->items as $key => $value) : ?>
-                    <?php $new_arr[] = $value['total_sold']; ?>
+            <?php foreach ($this->mochalova1 as $key => $value) : ?>
+                <?php number_format($value['total_sold'], 3, '.', ''); ?>
+                <?php $new_arr[] = $value['total_sold']; ?>
+            <?php endforeach; ?>
+            <?php foreach ($this->mochalova3itemsWereMovedToOktabrskaya as $key => $value) : ?>
+                <?php number_format($value['total_moved'], 3, '.', ''); ?>
+                <?php $new_arr2[] = $value['total_moved']; ?>
+            <?php endforeach; ?>
 
-                            <?php //echo $value['name']; ?>
-                            <?php number_format($value['total_sold'], 3, '.', ''); ?>
-
-                <?php endforeach; ?>
             <div class="col-sm-12">
                 <table  style="font-size: 13px;"  cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
             <thead>
@@ -32,6 +33,7 @@
                 <th class="text-center">Инвентаризация</th>
                 <th class="text-center">Закуплено</th>
                 <th class="text-center">Сбыто</th>
+                <th class="text-center">Перемещено но Октябрьскую</th>
                 <th class="text-center">Остаток</th>
                 <th class="text-center">Цена шт, руб</th>
                 <th class="text-center">Итого, руб</th>
@@ -39,16 +41,15 @@
             </thead>
             <tbody>
             <?php $count1 = 0;
-            foreach ($this->items2 as $key => $value) :
-
-                $sum_item = $value['quantity_first'] + $value['total_bought'] - $new_arr[$count1];
-                ?>
+            foreach ($this->mochalova2 as $key => $value) :
+                $sum_item = $value['quantity_first_Mochalova'] + $value['total_bought'] - $new_arr[$count1] - $new_arr2[$count2]; ?>
                 <tr>
-                    <td><?php echo $value['id']; ?></td>
+                    <td><?php echo $value['id'] . $new_arr2[$count2]; ?></td>
                     <td><?php echo $value['name']; ?></td>
                     <td><?php echo number_format($value['quantity_first_Mochalova'], 2, '.', ''); ?></td>
                     <td><?php echo number_format($value['total_bought'], 2, '.', ''); ?></td>
                     <td><?php echo number_format($new_arr[$count1], 2, '.', ''); ?></td>
+                    <td ><?php echo number_format($new_arr2[$count1], 2, '.', ''); ?></td>
                     <td ><?php echo number_format($sum_item, 2, '.', ''); ?></td>
                     <td><?php echo $value['isc_cost'] * EURO; ?></td>
                     <td><?php echo number_format($sum_item * ($value['isc_cost'] * EURO), 2, '.', ''); ?></td>

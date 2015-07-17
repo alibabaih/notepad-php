@@ -34,26 +34,16 @@ class Goods extends Controller {
         $data['distributor_rub_cost'] = $_POST['distributor_rub_cost'];
         $data['customer_ye_cost'] = $_POST['customer_ye_cost'];
         $data['customer_rub_cost'] = $_POST['customer_rub_cost'];
-
         //@TODO: Do your error checking!
 
         $this->model->create($data);
-        //header('location: ' .URL . 'goods');
-        echo '
-                <script type="text/javascript">
-                    location.replace("' . URL . 'goods");
-                </script>
-                ';
+        header('location: ' .URL . 'goods');
     }
 
 
     function delete($id) {
         $this->model->delete($id);
-        echo '
-                <script type="text/javascript">
-                    location.replace("' . URL . 'goods");
-                </script>
-                ';
+        header('location: ' .URL . 'goods');
     }
 
     function edit($id) {
@@ -75,14 +65,8 @@ class Goods extends Controller {
         $data['distributor_rub_cost'] = $_POST['distributor_rub_cost'];
         $data['customer_ye_cost'] = $_POST['customer_ye_cost'];
         $data['customer_rub_cost'] = $_POST['customer_rub_cost'];
-
         $this->model->editSave($data);
-
-        echo '
-                <script type="text/javascript">
-                    location.replace("' . URL . 'goods");
-                </script>
-                ';
+        header('location: ' .URL . 'goods');
     }
 
     function logout() {

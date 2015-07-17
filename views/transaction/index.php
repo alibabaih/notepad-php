@@ -109,8 +109,8 @@
                                     <!--@TODO:  -->
                                     <label class="control-label">В магазин</label>
                                     <select class="form-control" name="items_were_send_to">
-                                        <option value="Павла Мочалова">Павла Мочалова</option>
                                         <option value="Октябрьская">Октябрьская</option>
+                                        <option value="Павла Мочалова">Павла Мочалова</option>
                                     </select>
                                 </div>
                             </div>

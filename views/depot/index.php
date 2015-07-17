@@ -9,14 +9,11 @@
     </div>
     <div class="panel-body" style="overflow-x: scroll;">
         <div class="row">
-                <?php $count = 0;
-                foreach ($this->items as $key => $value) : ?>
-                    <?php $new_arr[] = $value['total_sold']; ?>
+            <?php foreach ($this->items as $key => $value) : ?>
+                <?php number_format($value['total_sold'], 3, '.', ''); ?>
+                <?php $new_arr[] = $value['total_sold']; ?>
+            <?php endforeach; ?>
 
-                            <?php //echo $value['name']; ?>
-                            <?php number_format($value['total_sold'], 3, '.', ''); ?>
-
-                <?php endforeach; ?>
             <div class="col-sm-12">
                 <table  style="font-size: 13px;"  cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" >
             <thead>
@@ -35,8 +32,7 @@
             <tbody>
             <?php $count1 = 0;
             foreach ($this->items2 as $key => $value) :
-
-                $sum_item = $value['quantity_first'] + $value['total_bought'] - $new_arr[$count1];
+                $sum_item = $value['quantity_first_Mochalova'] + $value['quantity_first_Oktabrskaya'] + $value['total_bought'] - $new_arr[$count1];
                 ?>
                 <tr>
                     <td><?php echo $value['id']; ?></td>

@@ -15,24 +15,20 @@ class Depot extends Controller {
     function index() {
         $this->view->items = $this->model->items();
         $this->view->items2 = $this->model->items2();
-        $this->view->depotSold = $this->model->depotSold();
-        $this->view->depotBought = $this->model->depotBought();
-        $this->view->relatesProducts = $this->model->relatesProducts();
-        $this->view->goods = $this->model->goods();
-        $this->view->howMuchCostStore = $this->model->howMuchCostStore();//how much cost store
-        $this->view->soldTotalGoods = $this->model->soldTotalGoods();//sold total goods
         $this->view->render('depot/index');
     }
 
     function mochalova() {
-        $this->view->items = $this->model->mochalova1();
-        $this->view->items2 = $this->model->mochalova2();
+        $this->view->mochalova1 = $this->model->mochalova1();
+        $this->view->mochalova2 = $this->model->mochalova2();
+        $this->view->mochalova3itemsWereMovedToOktabrskaya = $this->model->mochalova3itemsWereMovedToOktabrskaya();
         $this->view->render('depot/mochalova');
     }
 
     function oktabrskaya() {
-        $this->view->items = $this->model->oktabrskaya1();
-        $this->view->items2 = $this->model->oktabrskaya2();
+        $this->view->oktabrskaya1 = $this->model->oktabrskaya1();
+        $this->view->oktabrskaya2 = $this->model->oktabrskaya2();
+        $this->view->oktabrskaya3itemsWereMovedToMochalova = $this->model->oktabrskaya3itemsWereMovedToMochalova();
         $this->view->render('depot/oktabrskaya');
     }
 
@@ -41,6 +37,5 @@ class Depot extends Controller {
         header('location: ../index');
         exit;
     }
-
 
 }

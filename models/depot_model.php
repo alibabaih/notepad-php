@@ -9,7 +9,7 @@ class Depot_Model extends Model {
         $sth = $this->db->prepare('
                 SELECT goods.id, goods.quantity_first_Mochalova, goods.quantity_first_Oktabrskaya, goods.name, total_sold
                 FROM (
-                SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold WHERE sold.shop = "Павла Мочалова" GROUP BY sold.good_id
+                SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold GROUP BY sold.good_id
                 ) sold_alias
                 RIGHT JOIN goods ON goods.id = sold_alias.good_id
                 ORDER BY id;
@@ -22,7 +22,7 @@ class Depot_Model extends Model {
         $sth = $this->db->prepare('
                 SELECT goods.id, goods.isc_cost, goods.quantity_first_Mochalova, goods.quantity_first_Oktabrskaya, goods.name, total_bought
                 FROM (
-                SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought WHERE bought.shop = "Павла Мочалова" GROUP BY bought.good_id
+                SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought GROUP BY bought.good_id
                 ) bought_alias
                 RIGHT JOIN goods ON goods.id = bought_alias.good_id
                 ORDER BY id;
@@ -36,7 +36,7 @@ class Depot_Model extends Model {
                 SELECT goods.id, goods.quantity_first_Mochalova, goods.name, total_sold
                 FROM (
                 SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold
-                WHERE sold.shop = '. BOTTOM_OFFICE .' GROUP BY sold.good_id
+                WHERE sold.shop = "'. BOTTOM_OFFICE .'" GROUP BY sold.good_id
                 ) sold_alias
                 RIGHT JOIN goods ON goods.id = sold_alias.good_id
                 ORDER BY id;
@@ -50,9 +50,23 @@ class Depot_Model extends Model {
                 SELECT goods.id, goods.isc_cost, goods.quantity_first_Mochalova, goods.name, total_bought
                 FROM (
                 SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought
-                WHERE bought.shop = '. BOTTOM_OFFICE .' GROUP BY bought.good_id
+                WHERE bought.shop = "'. BOTTOM_OFFICE .'" GROUP BY bought.good_id
                 ) bought_alias
                 RIGHT JOIN goods ON goods.id = bought_alias.good_id
+                ORDER BY id;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function mochalova3itemsWereMovedToOktabrskaya() {
+        $sth = $this->db->prepare('
+                SELECT goods.id, goods.quantity_first_Mochalova, goods.name, total_moved
+                FROM (
+                SELECT SUM(transactions.quantity) AS total_moved, transactions.good_id FROM transactions
+                WHERE transactions.items_were_send_from = "'. BOTTOM_OFFICE .'" GROUP BY transactions.good_id
+                ) sold_alias
+                RIGHT JOIN goods ON goods.id = sold_alias.good_id
                 ORDER BY id;
         ');
         $sth->execute();
@@ -64,7 +78,7 @@ class Depot_Model extends Model {
                 SELECT goods.id, goods.quantity_first_Oktabrskaya, goods.name, total_sold
                 FROM (
                 SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold
-                WHERE sold.shop = '. TOP_OFFICE .' GROUP BY sold.good_id
+                WHERE sold.shop = "'. TOP_OFFICE .'" GROUP BY sold.good_id
                 ) sold_alias
                 RIGHT JOIN goods ON goods.id = sold_alias.good_id
                 ORDER BY id;
@@ -78,9 +92,23 @@ class Depot_Model extends Model {
                 SELECT goods.id, goods.isc_cost, goods.quantity_first_Oktabrskaya, goods.name, total_bought
                 FROM (
                 SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought
-                WHERE bought.shop = '. TOP_OFFICE .' GROUP BY bought.good_id
+                WHERE bought.shop = "'. TOP_OFFICE .'" GROUP BY bought.good_id
                 ) bought_alias
                 RIGHT JOIN goods ON goods.id = bought_alias.good_id
+                ORDER BY id;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function oktabrskaya3itemsWereMovedToMochalova() {
+        $sth = $this->db->prepare('
+                SELECT goods.id, goods.quantity_first_Oktabrskaya, goods.name, total_moved
+                FROM (
+                SELECT SUM(transactions.quantity) AS total_moved, transactions.good_id FROM transactions
+                WHERE transactions.items_were_send_from = "'. TOP_OFFICE .'" GROUP BY transactions.good_id
+                ) sold_alias
+                RIGHT JOIN goods ON goods.id = sold_alias.good_id
                 ORDER BY id;
         ');
         $sth->execute();
