@@ -163,8 +163,8 @@
                             </td>';
                             echo '<td class="text-center">' . $value['category'] . '</td>';
 
-                            echo '<td class="text-center">' . $value['quantity_first_Mochalova'] . '</td>';
-                            echo '<td class="text-center">' . $value['quantity_first_Oktabrskaya'] . '</td>';
+                            echo '<td class="text-center">' . $value['quantity_august_Mochalova'] . '</td>';
+                            echo '<td class="text-center">' . $value['quantity_august_Oktabrskaya'] . '</td>';
 
                             echo '<td class="text-center">' . $value['point'] . '</td>';
                             echo '<td class="text-center">' . $value['purches_cost'] . ' уе.</td>';

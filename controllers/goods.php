@@ -57,6 +57,8 @@ class Goods extends Controller {
         $data = array();
         $data['id'] = $id;
         $data['name'] = $_POST['name'];
+        $data['quantity_august_Mochalova'] = $_POST['quantity_august_Mochalova'];
+        $data['quantity_august_Oktabrskaya'] = $_POST['quantity_august_Oktabrskaya'];
         $data['category_id'] = $_POST['category_id'];
         $data['point'] = $_POST['point'];
         $data['purches_cost'] = $_POST['purches_cost'];

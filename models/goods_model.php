@@ -53,6 +53,8 @@ class Goods_Model extends Model {
         $sth = $this->db->prepare('UPDATE goods
             SET
                 name = :name,
+                quantity_august_Mochalova = :quantity_august_Mochalova,
+                quantity_august_Oktabrskaya = :quantity_august_Oktabrskaya,
                 category_id = :category_id,
                 point = :point,
                 purches_cost = :purches_cost,
@@ -66,6 +68,8 @@ class Goods_Model extends Model {
         $sth->execute(array(
             ':id' => $data['id'],
             ':name' => $data['name'],
+            ':quantity_august_Mochalova' => $data['quantity_august_Mochalova'],
+            ':quantity_august_Oktabrskaya' => $data['quantity_august_Oktabrskaya'],
             ':category_id' => $data['category_id'],
             ':point' => $data['point'],
             ':purches_cost' => $data['purches_cost'],

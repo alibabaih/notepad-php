@@ -8,26 +8,27 @@
         <div class="panel-body">
             <form method="post" action="<? echo URL; ?>goods/editSave/<?php echo $this->good['id']; ?>" class="form">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group no-margin-hr">
                             <label class="control-label">Название товара</label>
                             <input type="text" name="name" placeholder="Название товара" value="<?php echo $this->good['name']; ?>" class="form-control">
                         </div>
                     </div>
-                    <div class="col-sm-6 no-margin-hr">
-                        <label class="control-label">Категория</label>
-                        <div class="form-group">
-                            <select name="category_id" class="form-control">
-                                <option value="<?php echo $this->good['category_id']; ?>" selected><?php echo $this->good['category']; ?></option>
-                                <?php
-                                foreach ($this->getCategoryList as $key => $value) {
 
-                                    echo "<option value=" .$value['id_cat'] . ">" . $value['category'] . '</option>';
-                                }
-                                ?>
-                            </select>
+                        <div class="col-sm-4">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Остаток, кол-во (П.Мочалова)</label>
+                                <input type="text" name="quantity_august_Mochalova" placeholder="Количество товара" value="<?php echo $this->good['quantity_august_Mochalova']; ?>" class="form-control">
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-sm-4">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Остаток, кол-во (Октябрьская)</label>
+                                <input type="text" name="quantity_august_Oktabrskaya" placeholder="Количество товара" value="<?php echo $this->good['quantity_august_Oktabrskaya']; ?>" class="form-control">
+                            </div>
+                        </div>
+                    
+
 
                 </div>
                 <div class="row">
@@ -51,13 +52,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4 no-margin-hr">
+                        <label class="control-label">Категория</label>
+                        <div class="form-group">
+                            <select name="category_id" class="form-control">
+                                <option value="<?php echo $this->good['category_id']; ?>" selected><?php echo $this->good['category']; ?></option>
+                                <?php
+                                foreach ($this->getCategoryList as $key => $value) {
+
+                                    echo "<option value=" .$value['id_cat'] . ">" . $value['category'] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
                         <div class="form-group no-margin-hr">
                             <label class="control-label">Дистрибьютор, <i class="fa fa-rub"></i></label>
                             <input type="text" name="distributor_rub_cost" value="<?php echo $this->good['distributor_rub_cost']; ?>" class="form-control">
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group no-margin-hr">
                             <label class="control-label">Клиент, <i class="fa fa-rub"></i></label>
                             <input type="text" name="customer_rub_cost" value="<?php echo $this->good['customer_rub_cost']; ?>" class="form-control">
