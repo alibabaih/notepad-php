@@ -112,7 +112,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group  has-feedback">
-                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Товары, закупаемые в Ли Весте, НЕ сопутствующие товары.">Закуплено продукции</label></div>
+                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Затраты на любую продукцию (Ли Вест и сопутствующие)">Закуплено продукции</label></div>
                             <input type="text" name="purchases" placeholder="Закуплено продукции" class="form-control" onkeyup="return proverka(this);" />
                             <i class="fa fa-ruble form-control-feedback"></i>
                         </div>
@@ -135,7 +135,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group  has-feedback">
-                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Оплата через терминал.">Безналичная оплата</label></div>
+                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Оплата через терминал за всё.">Безналичная оплата</label></div>
                             <input type="text" name="non_cash_payment" placeholder="Безналичная оплата" class="form-control" onkeyup="return proverka(this);" />
                             <i class="fa fa-ruble form-control-feedback"></i>
                         </div>
@@ -165,7 +165,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group  has-feedback">
-                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="После всех операций фактически минус вливания.">Деньги в кассе</label></div>
+                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Вся наличка включая вливание.">Деньги в кассе</label></div>
                             <input type="text" name="account_cashier" placeholder="Деньги в кассе" class="form-control" onkeyup="return proverka(this);" />
                             <i class="fa fa-ruble form-control-feedback"></i>
                         </div>
@@ -262,9 +262,9 @@
         <?php
             $time = strtotime($value['date']);
             $myFormatForView = date("d.m.Y", $time);
-            $all_expenses = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'];
-            $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['infusion'];
-            $total = $value['non_cash_payment'] + $value['cash_payment'] - $value['services'];
+            $all_expenses = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods'];
+            $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty'];
+            $total = $value['non_cash_payment'] + $value['cash_payment'] + $value['services'];
             $shop_name = 0;
             if($value['shop'] == TOP_OFFICE) {
                 $shop_name = "top-office";
@@ -293,7 +293,7 @@
                         Закуплено продукции: <span style="float: right"><?php echo number_format($value['purchases'], 2, ',', ' '); ?> руб.</span>
                     </div>
                     <div class="col-sm-3">
-                        Выдано бонусов: <span style="float: right"><?php echo number_format($value['bonus'], 2, ',', ' '); ?> руб.</span>
+                        Выдано бонусов деньгами: <span style="float: right"><?php echo number_format($value['bonus'], 2, ',', ' '); ?> руб.</span>
                     </div>
                     <div class="col-sm-3">
                         Неоплаченный товар: <span style="float: right"><?php echo number_format($value['unpaid_goods'], 2, ',', ' '); ?> руб.</span>
@@ -351,21 +351,21 @@
                 <hr/>
                 <div class="row">
                     <div class="col-sm-4">
-                        Все расходы: <?php echo number_format($all_expenses, 2, ',', ' '); ?> руб.<br />
+                        <span class="badge badge-danger">Все расходы: <?php echo number_format($all_expenses, 2, ',', ' '); ?> руб.</span> <br />
                         <?php if(Session::get('role') == ADMIN) : ?>
-                        <?php echo '<em>Зарплата ('.$value['salary'] .') + Закупка продукции ('. $value['purchases'] .') + Выдано бонусов ('. $value['bonus'] .') + Коммерческие расходы ('. $value['expenses'] .') + Дивиденды ('. $value['dividends'] .')</em>'; ?>
+                        <?php echo '<em>Зарплата ('.$value['salary'] .') + Закупка продукции ('. $value['purchases'] .') + Выдано бонусов деньгами ('. $value['bonus'] .') + Коммерческие расходы ('. $value['expenses'] .') + Дивиденды ('. $value['dividends'] .') + Оплата бонусами ('. $value['cash_bonus'] . ') + Неоплаченный товар (товар в подарок) (' . $value['unpaid_goods'] . ')</em>'; ?>
                         <?php endif; ?>
                     </div>
                     <div class="col-sm-4">
-                        Выручка: <?php echo number_format($revenue, 2, ',', ' '); ?> руб.<br />
+                        <span class="badge badge-info">Выручка: <?php echo number_format($revenue, 2, ',', ' '); ?> руб.</span> <br />
                         <?php if(Session::get('role') == ADMIN) : ?>
-                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') + Вливание ('. $value['infusion'] .')</em>'; ?>
+                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') +  Долг возвращён на ('. $value['returned_to_duty'] .')</em>'; ?>
                         <?php endif; ?>
                     </div>
                     <div class="col-sm-4">
-                        Итог продаж: <?php echo number_format($total, 2, ',', ' '); ?> руб.<br />
+                        <span class="badge badge-success">Итог продаж: <?php echo number_format($total, 2, ',', ' '); ?> руб. из них Услуги на: <?php echo number_format($value['services'], 2, ',', ' '); ?>  руб.</span><br />
                         <?php if(Session::get('role') == ADMIN) : ?>
-                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') - Оплата за услуги ('. $value['services'] .')</em>'; ?>
+                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') + Оплата за услуги ('. $value['services'] .')</em>'; ?>
                         <?php endif; ?>
                     </div>
                 </div>

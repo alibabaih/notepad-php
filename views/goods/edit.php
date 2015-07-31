@@ -27,7 +27,7 @@
                                 <input type="text" name="quantity_august_Oktabrskaya" placeholder="Количество товара" value="<?php echo $this->good['quantity_august_Oktabrskaya']; ?>" class="form-control">
                             </div>
                         </div>
-                    
+
 
 
                 </div>
