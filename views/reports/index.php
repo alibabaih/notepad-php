@@ -104,7 +104,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group  has-feedback">
-                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Весь товар за наличный и безналичный расчёт, не зависит от других пунктов.">Сопутствующий товар</label></div>
+                            <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Весь товар за наличный и безналичный расчёт, не зависит от других пунктов.">Сопутствующий товар неколичественный</label></div>
                             <input type="text" name="related_products" placeholder="Сопутствующий товар" class="form-control" onkeyup="return proverka(this);" />
                             <i class="fa fa-ruble form-control-feedback"></i>
 

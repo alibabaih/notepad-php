@@ -13,6 +13,9 @@ class Dashboard extends Controller {
     }
 
     function index() {
+        $this->view->revenue = $this->model->revenue();
+        $this->view->expenditures = $this->model->expenditures();
+
         $this->view->earnedToday = $this->model->earnedToday();
         $this->view->earnedYesterday = $this->model->earnedYesterday();
         $this->view->debt = $this->model->debt();

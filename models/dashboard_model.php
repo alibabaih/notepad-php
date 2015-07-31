@@ -36,4 +36,16 @@ class Dashboard_Model extends Model {
         return $sth->fetchAll();
     }
 
+    function revenue() {
+        $sth = $this->db->prepare('SELECT * FROM reports ORDER BY date DESC');
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    function expenditures() {
+        $sth = $this->db->prepare('SELECT * FROM reports ORDER BY date DESC');
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
 }

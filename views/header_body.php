@@ -77,16 +77,16 @@
                     <a href="<?php echo URL; ?>reports"><i class="menu-icon fa fa-shopping-cart"></i><span class="mm-text">Финансовые отчёты</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URL; ?>sold"><i class="menu-icon fa fa-legal"></i><span class="mm-text">Продажи продукции</span></a>
+                    <a href="<?php echo URL; ?>sold"><i class="menu-icon fa fa-legal"></i><span class="mm-text">Продажи продукции количественной</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URL; ?>transaction"><i class="menu-icon fa fa-share"></i><span class="mm-text">Транзакции между офисами</span></a>
                 </li>
                 <li class="mm-dropdown">
-                    <a href="#"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Закупка продукции</span></a>
+                    <a href="#"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Закупка продукции количественной</span></a>
                     <ul>
                         <li>
-                            <a tabindex="-1" href="<?php echo URL; ?>bought"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Закупка продукции</span></a>
+                            <a tabindex="-1" href="<?php echo URL; ?>bought"><i class="menu-icon fa fa-truck"></i><span class="mm-text">Закупка продукции количественной</span></a>
                         </li>
                         <li>
                             <a tabindex="-1" href="<?php echo URL; ?>bought/related"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Дополнительно</span></a>
