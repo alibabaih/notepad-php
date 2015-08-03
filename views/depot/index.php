@@ -32,13 +32,13 @@
             <tbody>
             <?php $count1 = 0;
             foreach ($this->items2 as $key => $value) :
-                $sum_item = $value['quantity_first_Mochalova'] + $value['quantity_first_Oktabrskaya'] + $value['total_bought'] - $new_arr[$count1];
+                $sum_item = $value['quantity_august_Mochalova'] + $value['quantity_august_Oktabrskaya'] + $value['total_bought'] - $new_arr[$count1];
                 ?>
                 <tr>
                     <td><?php echo $value['id']; ?></td>
                     <td><?php echo $value['name']; ?></td>
-                    <td><?php echo number_format($value['quantity_first_Mochalova'], 2, '.', ''); ?></td>
-                    <td><?php echo number_format($value['quantity_first_Oktabrskaya'], 2, '.', ''); ?></td>
+                    <td><?php echo number_format($value['quantity_august_Mochalova'], 2, '.', ''); ?></td>
+                    <td><?php echo number_format($value['quantity_august_Oktabrskaya'], 2, '.', ''); ?></td>
                     <td><?php echo number_format($value['total_bought'], 2, '.', ''); ?></td>
                     <td><?php echo number_format($new_arr[$count1], 2, '.', ''); ?></td>
                     <td ><?php echo number_format($sum_item, 2, '.', ''); ?></td>

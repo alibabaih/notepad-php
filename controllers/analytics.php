@@ -43,6 +43,8 @@ class Analytics extends Controller {
         $end = "2015-12-31";
         $this->view->analyticsListDecember = $this->model->analyticsListByMonth($start, $end);
 
+        $this->view->cashier = $this->model->cashier();
+
 
         $this->view->depotSold = $this->model->depotSold();
         $this->view->depotBought = $this->model->depotBought();

@@ -22,6 +22,7 @@ class Depot extends Controller {
         $this->view->mochalova1 = $this->model->mochalova1();
         $this->view->mochalova2 = $this->model->mochalova2();
         $this->view->mochalova3itemsWereMovedToOktabrskaya = $this->model->mochalova3itemsWereMovedToOktabrskaya();
+        $this->view->mochalova3itemsWereTakenFromOktabrskaya = $this->model->mochalova3itemsWereTakenFromOktabrskaya();
         $this->view->render('depot/mochalova');
     }
 
@@ -29,6 +30,7 @@ class Depot extends Controller {
         $this->view->oktabrskaya1 = $this->model->oktabrskaya1();
         $this->view->oktabrskaya2 = $this->model->oktabrskaya2();
         $this->view->oktabrskaya3itemsWereMovedToMochalova = $this->model->oktabrskaya3itemsWereMovedToMochalova();
+        $this->view->oktabrskaya3itemsWereTakenFromMochalova = $this->model->oktabrskaya3itemsWereTakenFromMochalova();
         $this->view->render('depot/oktabrskaya');
     }
 

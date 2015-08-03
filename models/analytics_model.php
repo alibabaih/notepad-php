@@ -11,6 +11,12 @@ class Analytics_Model extends Model {
         return $sth->fetchAll(); //return into controller
     }
 
+    function cashier() {
+        $sth = $this->db->prepare('SELECT account_cashier FROM reports WHERE DATE = CURDATE()');
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
     function analyticsList() {
         $sth = $this->db->prepare('SELECT * FROM reports');
         $sth->execute();
