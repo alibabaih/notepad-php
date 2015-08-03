@@ -7,7 +7,25 @@
     <div class="panel-heading">
         <span class="panel-title">Список отчётов</span>
     </div>
-    <div class="panel-body" style="overflow-x: scroll;">
+
+    <div class="panel-body">
+
+        <div class="note">
+            <h4 class="note-title">Сопутствующие товары <small>c 01.04.2015</small></h4>
+            <?php foreach ($this->boughtRelatedItems as $key => $value) : ?>
+                <?php $bought = $value['bought']; ?>
+                <?php echo 'Купленные товары: ' . number_format($bought, 2, '.', ' ') .' руб.'; ?>
+            <?php endforeach; ?>
+            <?php foreach ($this->soldRelatedItems as $key => $value) : ?>
+                <?php $sold = $value['sold']; ?>
+                <?php echo 'Проданные товары: ' . number_format($sold, 2, '.', ' ') .' руб.'; ?>
+            <?php endforeach; ?>
+            <?php
+                $related = $bought - $sold;
+                echo '<span class="badge badge-success">Итого: ' . number_format($related, 2, '.', ' ') .' руб.</span>';
+            ?>
+        </div>
+
         <div class="row">
             <?php foreach ($this->items as $key => $value) : ?>
                 <?php number_format($value['total_sold'], 3, '.', ''); ?>

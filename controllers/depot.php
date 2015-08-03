@@ -15,6 +15,8 @@ class Depot extends Controller {
     function index() {
         $this->view->items = $this->model->items();
         $this->view->items2 = $this->model->items2();
+        $this->view->boughtRelatedItems = $this->model->boughtRelatedItems();
+        $this->view->soldRelatedItems = $this->model->soldRelatedItems();
         $this->view->render('depot/index');
     }
 

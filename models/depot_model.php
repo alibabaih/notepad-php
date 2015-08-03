@@ -5,6 +5,22 @@ class Depot_Model extends Model {
         parent::__construct();
     }
 
+    function boughtRelatedItems() {
+        $sth = $this->db->prepare('
+            SELECT SUM(related.related) AS bought FROM related;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function soldRelatedItems() {
+        $sth = $this->db->prepare('
+            SELECT SUM(reports.related_products) AS sold FROM reports;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function items() {
         $sth = $this->db->prepare('
                 SELECT goods.id, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_sold
