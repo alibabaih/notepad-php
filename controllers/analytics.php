@@ -43,7 +43,10 @@ class Analytics extends Controller {
         $end = "2015-12-31";
         $this->view->analyticsListDecember = $this->model->analyticsListByMonth($start, $end);
 
-        $this->view->cashier = $this->model->cashier();
+        $office = BOTTOM_OFFICE;
+        $this->view->cashierBottom = $this->model->cashier($office);
+        $office = TOP_OFFICE;
+        $this->view->cashierTop = $this->model->cashier($office);
 
 
         $this->view->depotSold = $this->model->depotSold();
@@ -51,10 +54,15 @@ class Analytics extends Controller {
         $this->view->relatesProducts = $this->model->relatesProducts();
         $this->view->goods = $this->model->goods();
 
+
+
         //how much cost store
         $this->view->howMuchCostStore = $this->model->howMuchCostStore();
         //sold total goods
         $this->view->soldTotalGoods = $this->model->soldTotalGoods();
+
+        $this->view->augustRelatedBought = $this->model->augustRelatedBought();
+        $this->view->augustRelatedSold = $this->model->augustRelatedSold();
         $this->view->render('analytics/index');
     }
 

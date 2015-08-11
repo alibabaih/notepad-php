@@ -5,6 +5,13 @@ class Dashboard_Model extends Model {
         parent::__construct();
     }
 
+
+    function ajax() {
+        $sth = $this->db->prepare('SELECT date, account_cashier  FROM reports WHERE date >= (NOW() - INTERVAL 7 DAY);');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function earnedToday() {
         //$sth = $this->db->prepare('SELECT * FROM  sold INNER JOIN goods  WHERE sold.good_id = goods.id AND DATE = CURDATE()');
         $sth = $this->db->prepare('SELECT non_cash_payment, cash_payment, infusion FROM  reports WHERE DATE = CURDATE()');
@@ -46,6 +53,38 @@ class Dashboard_Model extends Model {
         $sth = $this->db->prepare('SELECT * FROM reports ORDER BY date DESC');
         $sth->execute();
         return $sth->fetchAll();
+    }
+
+    function bought($now, $previousWeek) {
+        $sth = $this->db->prepare('
+                SELECT goods.id, goods.isc_cost, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_bought
+                FROM (
+                SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought WHERE bought.date >= "'.$previousWeek.'" AND bought.date <= "'.$now.'"
+                GROUP BY bought.good_id
+                ) bought_alias
+                RIGHT JOIN goods ON goods.id = bought_alias.good_id
+                ORDER BY id;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function sold($now, $previousWeek) {
+        $sth = $this->db->prepare('
+                SELECT goods.id, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_sold
+                FROM (
+                SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold WHERE bought.date >= "'.$previousWeek.'" AND bought.date <= "'.$now.'"
+                GROUP BY sold.good_id
+                ) sold_alias
+                RIGHT JOIN goods ON goods.id = sold_alias.good_id
+                ORDER BY id;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function related() {
+
     }
 
 }

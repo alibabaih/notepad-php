@@ -1,3 +1,9 @@
+<script>
+    $( document ).ready(function() {
+        var totalDepot = $('#totalDepot').val();
+        console.log(totalDepot);
+    });
+</script>
 <div id="content-wrapper">
     <div class="page-header">
         <h1><i class="fa fa-upload page-header-icon"></i>&nbsp;&nbsp;Склад</h1>
@@ -51,6 +57,8 @@
             <?php $count1 = 0;
             foreach ($this->items2 as $key => $value) :
                 $sum_item = $value['quantity_august_Mochalova'] + $value['quantity_august_Oktabrskaya'] + $value['total_bought'] - $new_arr[$count1];
+                $item_on_sum = $sum_item * ($value['isc_cost'] * EURO);
+                $liwest_depot_cost += $item_on_sum;
                 ?>
                 <tr>
                     <td><?php echo $value['id']; ?></td>
@@ -61,15 +69,21 @@
                     <td><?php echo number_format($new_arr[$count1], 2, '.', ''); ?></td>
                     <td ><?php echo number_format($sum_item, 2, '.', ''); ?></td>
                     <td><?php echo $value['isc_cost'] * EURO; ?></td>
-                    <td><?php echo number_format($sum_item * ($value['isc_cost'] * EURO), 2, '.', ''); ?></td>
+                    <td><?php echo number_format($item_on_sum, 2, '.', ''); ?></td>
                     <?php $count1++; ?>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
+        <?php global $total_depot_cost;
+            $total_depot_cost = $related + $liwest_depot_cost;
+            $total_depot_cost = number_format($total_depot_cost, 2, '.', ' ');
+            echo '<span class="badge badge-danger">Общая сумма склада на настоящий момент с учётом сопутствующих товаров ' . $total_depot_cost . ' руб.</span>';
+        ?>
             </div>
             </div>
     </div>
 </div>
 
 </div>
+

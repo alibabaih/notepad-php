@@ -48,8 +48,8 @@
 
     <div class="page-header">
         <div class="row">
-            <h1 class="col-xs-12 col-sm-6 text-center text-left-sm"><i class="fa fa-shopping-cart page-header-icon"></i>&nbsp;&nbsp;Финансовые отчёты</h1>
-            <div class="col-xs-12 col-sm-6">
+            <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="fa fa-shopping-cart page-header-icon"></i>&nbsp;&nbsp;Финансовые отчёты</h1>
+            <div class="col-xs-12 col-sm-8">
                 <div class="input-daterange input-group" id="bs-datepicker-range" style="float: right">
                     <form class="form-inline" method="post" action="<? echo URL; ?>reports/period/<?php echo $value['id']; ?>" class="form">
                         <div class="form-group">

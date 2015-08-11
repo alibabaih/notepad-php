@@ -32,5 +32,6 @@
     <!--[if lt IE 9]>
     <script src="<?php echo URL; ?>assets/javascripts/ie.min.js"></script>
     <![endif]-->
+
 </head>
 
