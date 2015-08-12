@@ -66,7 +66,8 @@ class Reports_Model extends Model {
           sold_in_debt,
           returned_to_duty,
           related_products,
-          unpaid_goods)
+          unpaid_goods,
+          liwest_balance)
           VALUES (:shop,
           :date,
           :non_cash_payment,
@@ -81,7 +82,8 @@ class Reports_Model extends Model {
           :sold_in_debt,
           :returned_to_duty,
           :related_products,
-          :unpaid_goods)
+          :unpaid_goods,
+          :liwest_balance)
         ');
 
         $sth->execute(array(
@@ -106,6 +108,7 @@ class Reports_Model extends Model {
             ':returned_to_duty' => $data['returned_to_duty'],
             ':related_products' => $data['related_products'],
             ':unpaid_goods' => $data['unpaid_goods'],
+            ':liwest_balance' => $data['liwest_balance'],
         ));
 
 

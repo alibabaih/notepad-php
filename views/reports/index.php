@@ -48,8 +48,8 @@
 
     <div class="page-header">
         <div class="row">
-            <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="fa fa-shopping-cart page-header-icon"></i>&nbsp;&nbsp;Финансовые отчёты</h1>
-            <div class="col-xs-12 col-sm-8">
+            <h1 class="col-xs-12 col-sm-6 text-center text-left-sm"><i class="fa fa-shopping-cart page-header-icon"></i>&nbsp;&nbsp;Финансовые отчёты</h1>
+            <div class="col-xs-12 col-sm-6">
                 <div class="input-daterange input-group" id="bs-datepicker-range" style="float: right">
                     <form class="form-inline" method="post" action="<? echo URL; ?>reports/period/<?php echo $value['id']; ?>" class="form">
                         <div class="form-group">
@@ -229,6 +229,21 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if (Session::get('office') == TOP_OFFICE){ ?>
+                    <div class="form-group  has-feedback">
+                        <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Заполняется 1 раз в месяц.">Карта "Ли Вест"</label></div>
+                        <input type="text" name="liwest_balance" placeholder="Карта Ли Вест" class="form-control" disabled />
+                        <i class="fa fa-ruble form-control-feedback"></i>
+                    </div>
+                <? } else {  ?>
+                    <div class="form-group  has-feedback">
+                        <div id="tooltips-demo"><label class="control-label" data-toggle="tooltip" data-placement="right" data-original-title="Заполняется 1 раз в месяц.">Карта "Ли Вест"</label></div>
+                        <input type="text" name="liwest_balance" placeholder="Карта Ли Вест" class="form-control" />
+                        <i class="fa fa-ruble form-control-feedback"></i>
+                    </div>
+                <?php } ?>
+
                 <div class="form-group">
                     <label class="control-label">Комментарий</label>
                     <textarea name="comment" placeholder="Комментарий" class="form-control"></textarea>
@@ -263,8 +278,9 @@
             $time = strtotime($value['date']);
             $myFormatForView = date("d.m.Y", $time);
             $all_expenses = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods'];
-            $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty'];
-            $total = $value['non_cash_payment'] + $value['cash_payment'] + $value['services'];
+            $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['infusion'];
+            $total = $value['non_cash_payment'] + $value['cash_payment'];
+            $debt = $value['sold_in_debt'] - $value['returned_to_duty'];
             $shop_name = 0;
             if($value['shop'] == TOP_OFFICE) {
                 $shop_name = "top-office";
@@ -350,22 +366,28 @@
                 <?php endif; ?>
                 <hr/>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <span class="badge badge-danger">Все расходы: <?php echo number_format($all_expenses, 2, ',', ' '); ?> руб.</span> <br />
                         <?php if(Session::get('role') == ADMIN) : ?>
                         <?php echo '<em>Зарплата ('.$value['salary'] .') + Закупка продукции ('. $value['purchases'] .') + Выдано бонусов деньгами ('. $value['bonus'] .') + Коммерческие расходы ('. $value['expenses'] .') + Дивиденды ('. $value['dividends'] .') + Оплата бонусами ('. $value['cash_bonus'] . ') + Неоплаченный товар (товар в подарок) (' . $value['unpaid_goods'] . ')</em>'; ?>
                         <?php endif; ?>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <span class="badge badge-info">Выручка: <?php echo number_format($revenue, 2, ',', ' '); ?> руб.</span> <br />
                         <?php if(Session::get('role') == ADMIN) : ?>
-                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') +  Долг возвращён на ('. $value['returned_to_duty'] .')</em>'; ?>
+                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') +  Вливания ('. $value['infusion'] .')</em>'; ?>
                         <?php endif; ?>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <span class="badge badge-success">Итог продаж: <?php echo number_format($total, 2, ',', ' '); ?> руб. из них Услуги на: <?php echo number_format($value['services'], 2, ',', ' '); ?>  руб.</span><br />
                         <?php if(Session::get('role') == ADMIN) : ?>
                             <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') + Оплата за услуги ('. $value['services'] .')</em>'; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <span class="badge badge-danger">Дебет(существующий долг): <?php echo number_format($debt, 2, ',', ' '); ?> руб.</span><br />
+                        <?php if(Session::get('role') == ADMIN) : ?>
+                            <?php echo '<em>Продано в долг ('.$value['sold_in_debt'] .') - Долг возвращён ('. $value['returned_to_duty'] .')</em>'; ?>
                         <?php endif; ?>
                     </div>
                 </div>

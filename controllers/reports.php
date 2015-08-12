@@ -48,6 +48,7 @@ class Reports extends Controller {
         if($_POST['returned_to_duty'] == null) { $_POST['returned_to_duty'] = 0; }
         if($_POST['related_products'] == null) { $_POST['related_products'] = 0; }
         if($_POST['unpaid_goods'] == null) { $_POST['unpaid_goods'] = 0; }
+        if($_POST['liwest_balance'] == null) { $_POST['liwest_balance'] = 0; }
 
         $data = array();
         $data['shop'] = $_POST['shop'];
@@ -71,17 +72,18 @@ class Reports extends Controller {
         $data['returned_to_duty'] = $_POST['returned_to_duty'];
         $data['related_products'] = $_POST['related_products'];
         $data['unpaid_goods'] = $_POST['unpaid_goods'];
+        $data['liwest_balance'] = $_POST['liwest_balance'];
 
 
         //@TODO: Do your error checking!
 
         $this->model->create($data);
-        //header('location: ' .URL . 'goods');
-        echo '
-                <script type="text/javascript">
-                    location.replace("' . URL . 'reports");
-                </script>
-                ';
+        header('location: ' .URL . 'reports');
+//        echo '
+//                <script type="text/javascript">
+//                    location.replace("' . URL . 'reports");
+//                </script>
+//                ';
     }
 
     function period() {
