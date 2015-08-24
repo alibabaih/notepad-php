@@ -26,7 +26,7 @@ class Dashboard_Model extends Model {
     }
 
     function debt() {
-        $sth = $this->db->prepare('SELECT sold_in_debt, returned_to_duty FROM reports');
+        $sth = $this->db->prepare('SELECT SUM(sold_in_debt) AS loan, SUM(returned_to_duty) AS deposit FROM reports');
         $sth->execute();
         return $sth->fetchAll();
     }
@@ -83,8 +83,42 @@ class Dashboard_Model extends Model {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function related() {
+    function related($date) {
+        $sth = $this->db->prepare('SELECT SUM(related.related) AS reserve FROM related WHERE related.date <= "'. $date .'"');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC); //return into controller
+    }
 
+    function relatedSold($date) {
+        $sth = $this->db->prepare('SELECT SUM(reports.related_products) AS sold_reserve FROM reports WHERE related.date <= "'. $date .'"');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC); //return into controller
+    }
+
+    function items($date) {
+        $sth = $this->db->prepare('
+                SELECT goods.id, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_sold
+                FROM (
+                SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold WHERE sold.date >= "2015-08-01" AND sold.date <= "'.$date.'" GROUP BY sold.good_id
+                ) sold_alias
+                RIGHT JOIN goods ON goods.id = sold_alias.good_id
+                ORDER BY id;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function items2($date) {
+        $sth = $this->db->prepare('
+                SELECT goods.id, goods.isc_cost, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_bought
+                FROM (
+                SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought WHERE bought.date >= "2015-08-01" AND bought.date <= "'.$date.'" GROUP BY bought.good_id
+                ) bought_alias
+                RIGHT JOIN goods ON goods.id = bought_alias.good_id
+                ORDER BY id;
+        ');
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

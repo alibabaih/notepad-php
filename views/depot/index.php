@@ -28,7 +28,7 @@
             <?php endforeach; ?>
             <?php
                 $related = $bought - $sold;
-                echo '<span class="badge badge-success">Итого: ' . number_format($related, 2, '.', ' ') .' руб.</span>';
+                echo '<hr/> <p><span class="badge badge-success">Итого: ' . number_format($related, 2, '.', ' ') .' руб.</span></p>';
             ?>
         </div>
 

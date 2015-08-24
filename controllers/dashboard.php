@@ -26,7 +26,7 @@ class Dashboard extends Controller {
         $this->view->debtOfficeOktabrskaya = $this->model->debtOfficeOktabrskaya();
         $this->view->debtOfficePavlaMochalova = $this->model->debtOfficePavlaMochalova();
 
-        $bought = array();
+        //$bought = array();
 
         $this->view->bought = $this->model->bought($now, $previousWeek);
         $this->view->sold = $this->model->sold($now, $previousWeek);
@@ -64,11 +64,19 @@ class Dashboard extends Controller {
         echo json_encode($revenueBottomAll);
     }
 
-    function countDepot() {
-        $this->model->indexPeriod();
+    function period() {
+//        $this->model->indexPeriod();
 
-        $this->model->related();
+        $dateGet = $_POST['date']; //04.02.15
+        $pieces = explode(".", $dateGet);
+        $date = '20' . $pieces[2] . '-' . $pieces[1] . '-' . $pieces[0];
 
+        $this->view->related = $this->model->related($date);
+        $this->view->relatedSold = $this->model->relatedSold($date);
+        $this->view->items = $this->model->items($date);
+        $this->view->items2 = $this->model->items2($date);
+        $this->view->date = $dateGet;
+        $this->view->render('dashboard/period');
     }
 
     function logout() {
