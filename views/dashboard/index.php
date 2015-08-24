@@ -4,44 +4,38 @@
         <div class="col-md-12">
             <button class="respond">click</button>
             <p class="ajaxContent"></p>
-            <script type="text/javascript" src-"http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
-            <script type="text/javascript" src-"http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
             <script>
-                var chartObject = uv.chart(chartType, graphDefinition, optionalConfiguration);
-
                 $(".respond").click(function() {
                     //alert('button was clicked');
                     $.ajax({
                         type: 'GET',
-                        url: '/dashboard/ajax',
+                        url: '/dashboard/revenue',
                         timeout: 3000,
                         datatype: 'json',
                         //data: '',
                         success: function(result) {
-                            $('.ajaxContent').append(result);
-                            var graphdef = {
-                                categories: ['uvCharts'],
-                                dataset : {
-                                    'uvCharts' : result
-                                }
-                            }
-                            var chart = uv.chart('Line', graphdef);
+                            //console.log(result);
+                            //$('.ajaxContent').append(result);
+                            var res = result.slice(1,-1);
+                            console.log(res);
+                            $('.ajaxContent').html('Date: ' + result.date + ', Revenue: ' + result.revenue);
+
+                            //$.each(result, function(key, value){
+                                //$('.ajaxContent').append(value['date'] + ' ' + value['revenue']);
+                                //console.log(key+ ':' + value);
+//                                $.each(value, function(key, value){
+//                                    console.log(value['date'] + ' ' + value['revenue']);
+//                                });
+                            //});
                         }
                     });
                 });
-
-
 
             </script>
 
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-<!--            <div id="chart_div" style="width: 900px; height: 500px;"></div>-->
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-3">
@@ -50,9 +44,13 @@
                     <span class="panel-title">Выручка ул.Павла Мочалова</span>
                 </div>
                 <div class="panel-body scroll-panel">
-                    <?php foreach ($this->revenue as $key=>$value): ?>
+                    <?php
+                    $revenueBottom = array();
+                    foreach ($this->revenue as $key=>$value): ?>
                         <?php if($value['shop'] == BOTTOM_OFFICE): ?>
-                            <?php $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty']; ?>
+                            <?php $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty'];
+                            array_push($revenueBottom, $revenue);
+                            ?>
                             <?php echo 'Дата: ' . $value['date'] . ' Сумма: ' . number_format($revenue, 2, ',', ' ').'руб. <br />'; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -65,9 +63,13 @@
                     <span class="panel-title">Выручка ул.Октябрьская</span>
                 </div>
                 <div class="panel-body scroll-panel">
-                    <?php foreach ($this->revenue as $key=>$value): ?>
+                    <?php
+                    $revenueTop = array();
+                    foreach ($this->revenue as $key=>$value): ?>
                         <?php if($value['shop'] == TOP_OFFICE): ?>
-                            <?php $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty']; ?>
+                            <?php $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty'];
+                            array_push($revenueTop, $revenue);
+                            ?>
                             <?php echo 'Дата: ' . $value['date'] . ' Сумма: ' . number_format($revenue, 2, ',', ' ').'руб. <br />'; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -80,9 +82,12 @@
                     <span class="panel-title">Расход ул.Павла Мочалова</span>
                 </div>
                 <div class="panel-body scroll-panel">
-                    <?php foreach ($this->expenditures as $key=>$value): ?>
+                    <?php
+                    $expendituresBottom = array();
+                    foreach ($this->expenditures as $key=>$value): ?>
                         <?php if($value['shop'] == BOTTOM_OFFICE): ?>
-                            <?php $expenditures = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods']; ?>
+                            <?php $expenditures = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods'];
+                            array_push($expendituresBottom, $expenditures); ?>
                             <?php echo 'Дата: ' . $value['date'] . ' Сумма: ' . number_format($expenditures, 2, ',', ' ').'руб. <br />'; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -95,12 +100,71 @@
                     <span class="panel-title">Расход ул.Октябрьская</span>
                 </div>
                 <div class="panel-body scroll-panel">
-                    <?php foreach ($this->expenditures as $key=>$value): ?>
+                    <?php
+                    $expendituresTop = array();
+                    foreach ($this->expenditures as $key=>$value): ?>
                         <?php if($value['shop'] == TOP_OFFICE): ?>
-                            <?php $expenditures = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods']; ?>
+                            <?php $expenditures = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods'];
+                            array_push($expendituresTop, $expenditures);
+                            ?>
                             <?php echo 'Дата: ' . $value['date'] . ' Сумма: ' . number_format($expenditures, 2, ',', ' ').'руб. <br />'; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--        -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Выручка - Расход ул.Октябрьская</span>
+                </div>
+                <div class="panel-body scroll-panel">
+<!--                    --><?php
+//                        $resultTop = array();
+//                        for($i = 0; $i < sizeof($revenueTop); $i++)
+//                        {
+//                            echo $result = $revenueTop[$i] - $expendituresTop[$i];
+//                            array_push($revenueTop, $result);
+//                            echo '<br />';
+//                        }
+//                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Выручка - Расход ул.Павла Мочалова</span>
+                </div>
+                <div class="panel-body scroll-panel">
+<!--                    --><?php
+//                        $resultBottom = array();
+//                        for($i = 0; $i < sizeof($revenueBottom); $i++)
+//                        {
+//                            echo $result = $revenueBottom[$i] - $expendituresBottom[$i];
+//                            array_push($revenueTop, $result);
+//                            echo '<br />';
+//                        }
+//                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Выручка - Расход Всего</span>
+                </div>
+                <div class="panel-body scroll-panel">
+<!--                    --><?php
+//                        for($i = 0; $i < sizeof($revenueTop); $i++)
+//                        {
+//                            echo $result= $revenueTop[$i] + $resultBottom[$i];
+//                            echo '<br />';
+//                        }
+//                    ?>
                 </div>
             </div>
         </div>

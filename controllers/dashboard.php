@@ -43,6 +43,27 @@ class Dashboard extends Controller {
         //print_r($example);
     }
 
+    function revenue() {
+        $revenueBottom = array();
+        $revenueBottomAll = array();
+        $revenue = $this->model->revenue();
+        foreach ($revenue as $key=>$value):
+            if($value['shop'] == BOTTOM_OFFICE):
+                $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['returned_to_duty'];
+                $date = $value['date'];
+//                $revenueBottomDate[$value['date']] = array($date, $revenue);
+
+                //$revenueBottomDate['date'] = $value['date'];
+                //$revenueBottomValue['revenue'] = $revenue;
+                $revenueBottom = array("date" => $date, "revenue" => $revenue);
+                array_push($revenueBottomAll, $revenueBottom);
+
+                //echo 'Дата: ' . $value['date'] . ' Сумма: ' . number_format($revenue, 2, ',', ' ').'руб. <br />';
+            endif;
+        endforeach;
+        echo json_encode($revenueBottomAll);
+    }
+
     function countDepot() {
         $this->model->indexPeriod();
 

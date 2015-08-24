@@ -25,6 +25,7 @@
     <?php foreach ($this->relatesProducts as $key => $value) : ?>
         <?php $related_beginnings += $value['related']; ?>
     <?php endforeach;?>
+    <h1>Инвентаризация на 01.04.2015</h1>
     <div class="alert alert-info alert-dark">
         <button type="button" class="close" data-dismiss="alert">×</button>
         Общая стоимость склада на 01.04.2015 составляла: <strong>
@@ -93,12 +94,12 @@
             ?>
         <?php endforeach; ?>
         <?php foreach($this->augustRelatedSold as $key => $value): ?>
-            <?php $augustRelatedSold = $value['related_products'];
-            ?>
+            <?php $augustRelatedSold = $value['related_products']; ?>
         <?php endforeach; ?>
-        <?php $augustRelated = $augustRelatedBought - augustRelatedSold; ?>
+        <?php $augustRelated = $augustRelatedBought - $augustRelatedSold; ?>
         <?php $totalAugustSumWithRelated = $augustRelated + $totalAugustSum; ?>
         <div class="col-md-12">
+            <h1>Инвентаризация на 01.08.2015</h1>
             <div class="alert alert-info alert-dark">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 Общая стоимость склада на 01.08.2015 составляла: <strong>
@@ -110,9 +111,11 @@
 
     <hr/>
     <?php $total_depot =  $bought_sum_total_n - $sold_sum_total + $bought_sum_total +  $sum_related_products_bought - $sum_related_products_sold . 'rub.'; ?>
+
+    <h1>Инвентаризация on-line</h1>
     <div class="alert alert-info alert-dark">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        !Итого цена склада на данный момент с учётом сопутствующих товаров равна:  <strong><?php echo number_format($total_depot, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
+        Итого цена склада на данный момент с учётом сопутствующих товаров равна:  <strong><?php echo number_format($total_depot, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
     </div>
     <?php //echo $bought_sum_total_n . ' - ' . $sold_sum_total . ' + ' . $bought_sum_total . ' + ' .  $sum_related_products_bought . ' - ' . $sum_related_products_sold; ?>
 
@@ -143,8 +146,10 @@
                         <th class="text-center"><span class="badge badge-info">Доход</span></th>
 
                         <th class="text-center">Касса</th>
+                        <th class="text-center">iБанк</th>
+                        <th class="text-center">Карта Ли Вест</th>
                         <th class="text-center">Склад</th>
-                        <th class="text-center">Активы</th>
+                        <th class="text-center"><span class="badge badge-success">Активы</span></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -161,11 +166,14 @@
                             $all_unpaid_goods += $value['unpaid_goods'];
                             $all_dividends += $value['dividends'];
 
+                            $all_account_cashier += $value['account_cashier'];
+                            $all_account_balance += $value['account_balance'];
+
                             $all_sold_in_debt += $value['sold_in_debt'];
                             $all_infusion += $value['infusion'];
                         endforeach;
                     $all_expenditures = $expenses_all + $all_salary + $all_purchases + $all_bonus + $all_cash_bonus + $all_unpaid_goods + $all_dividends;
-                    $all_revenue = $all_sold_in_debt + $all_infusion;
+                    $all_revenue = $all_account_balance + $all_account_cashier + $all_infusion;
                     $total_income = $all_revenue - $all_expenditures;
 
 
@@ -195,33 +203,27 @@
                                 $yesterday = date("Y-m-d", time() - 86400);
                             ?>
                             <?php  foreach ($this->cashierTop as $key => $value):
-                                if($value['date']  == $yesterday) {
+                                if($value['date']  == $currentDate) {
                                     $cashierTopOffice = $value['account_cashier'];
-                                    echo '<span class="tooltips-demo" data-toggle="tooltip" data-placement="top" data-original-title="за текущий день на'.TOP_OFFICE.'">' . $value['account_cashier'] . 'руб.</span>';
+                                    //echo '<span class="tooltips-demo" data-toggle="tooltip" data-placement="top" data-original-title="за текущий день на'.TOP_OFFICE.'">' . $value['account_cashier'] . 'руб.</span>';
                                 }
                             endforeach;
                             ?>
-                            <?php echo ' & '; ?>
                             <?php foreach ($this->cashierBottom as $key => $value):
-                                if($value['date'] == $yesterday) {
+                                if($value['date'] == $currentDate) {
                                     $cashierBottomOffice = $value['account_cashier'];
-                                    echo '<span class="tooltips-demo" data-toggle="tooltip" data-placement="top" data-original-title="за текущий день на'.BOTTOM_OFFICE.'">' . $value['account_cashier'] . 'руб.</span>';
+                                    //echo '<span class="tooltips-demo" data-toggle="tooltip" data-placement="top" data-original-title="за текущий день на'.BOTTOM_OFFICE.'">' . $value['account_cashier'] . 'руб.</span>';
                                 }
-//                                if ($value['date'] == $yesterday) {
-//                                    echo $value['account_cashier'] . 'руб. <small>за предыдущий день на ' . BOTTOM_OFFICE . '</small>';
-//                                }
-//                                if ($value['date'] == $currentDateMinus2) {
-//                                    echo $value['account_cashier'] . 'руб. <small>за ' . $value['date'] . ' на ' . BOTTOM_OFFICE . '</small>';
-//                                }
-//                                if ($value['date'] == $currentDateMinus3) {
-//                                    echo $value['account_cashier'] . 'руб. <small>за ' . $value['date'] . ' на ' . BOTTOM_OFFICE . '</small>';
-//                                }
                             endforeach; ?>
+                            <?php $cashierAllOffices = $cashierTopOffice + $cashierBottomOffice; ?>
+                            <?php echo number_format($cashierAllOffices, 2, ',', ' '); ?>руб.
                         </th>
+                        <th class="text-center"><?php echo number_format($value['account_balance'], 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center"><?php echo number_format($value['liwest_balance'], 2, ',', ' '); ?>руб.</th>
                         <th class="text-center"><?php echo number_format($total_depot, 2, ',', ' '); ?>руб.</th>
                         <th class="text-center">
-                            <?php $actives = $cashierTopOffice + $cashierBottomOffice + $total_depot; ?>
-                            <?php echo number_format($actives, 2, ',', ' '); ?>руб.
+                            <?php $actives = $cashierTopOffice + $cashierBottomOffice + $total_depot + $value['liwest_balance']; ?>
+                            <?php echo '<span class="badge badge-success">' . number_format($actives, 2, ',', ' '); ?>руб.</span>
                         </th>
                     </tr>
                     </tbody>
@@ -246,20 +248,22 @@
                 <th class="text-center">Коммерческие расходы</th>
                 <th class="text-center">Зарплата</th>
                 <th class="text-center">Закупка</th>
-                <th class="text-center">Итого расходы</th>
+                <th class="text-center">Бонусы деньгами</th>
+                <th class="text-center">Бонусы товаром</th>
+                <th class="text-center">Товар в подарок</th>
+                <th class="text-center">Дивиденды</th>
+                <th class="text-center"><span class="badge badge-danger">Расходы итого</span></th>
+
                 <th class="text-center">Касса</th>
                 <th class="text-center">Счёт</th>
                 <th class="text-center">Склад</th>
-                <th class="text-center">Бонусный, выданные деньгами</th>
-                <th class="text-center">Товар, проданный в долг</th>
-                <th class="text-center">Товар в подарок</th>
-                <th class="text-center">Итого активы</th>
-                <th class="text-center">Выручка</th>
+                <th class="text-center">Дебет</th>
+                <th class="text-center"><span class="badge badge-info">Доход</span></th>
+
+                <th class="text-center"><span class="badge badge-success">Выручка</span></th>
                 <th class="text-center">Вливания</th>
-                <th class="text-center">Прибыль операционная</th>
-                <th class="text-center">Дивиденды</th>
-                <th class="text-center">Бонусы, выплаченные деньгами</th>
-                <th class="text-center">Итого доход</th>
+                <th class="text-center"><span class="badge badge-success">Активы</span></th>
+
             </tr>
             </thead>
             <tbody>
@@ -267,77 +271,37 @@
                 foreach ($this->analyticsList as $key => $value) :
                     $time = strtotime($value['date']);
                     $myFormatForView = date("d.m.y", $time);
-                    $expenduteries_summ = $value['expenses'] + $value['salary'] + $value['purchases'];
                     $debt = $value['sold_in_debt'] - $value['returned_to_duty'];
-                    $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['infusion'];
                     $assets = $value['account_cashier'] + $value['account_balance'] + $total_depot;
-                    $expenses_total += $value['expenses'];
-                    $salary_total += $value['salary'];
-                    $purchases_total += $value['purchases'];
-                    $expenduteries_summ_total += $expenduteries_summ;
-                    $revenue_total += $revenue;
-                    $debt_total += $debt;
-                    $unpaid_goods_total += $value['unpaid_goods'];
-                    $assets_total += $assets;
-                    $infusion_total += $value['infusion'];
-                    $dividends_total += $value['dividends'];
-                    $bonus_total += $value['bonus'];
-                    $c = $revenue - $expenduteries_summ;
-                    $net_income = $c - $value['bonus'] - $value['dividends'];
-                    $net_income_total += $net_income;
-                    $c_total += $c;
-                    $cash_bonus_total += $value['cash_bonus'];
+                    $all_expenditures = $value['expenses'] + $value['salary'] + $value['purchases'] + $value['bonus'] + $value['cash_bonus'] + $value['unpaid_goods'] + $value['dividends'];
+                    $all_revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['infusion'];
+                    $total_income = $all_revenue - $all_expenditures;
 
-                    //number_format(, 2, ',', ' ')
                     echo '<tr>';
                     echo '<td class="text-center">' . $myFormatForView  . '</td>';
                     echo '<td class="text-center">' . $value['shop'] . '</td>';
                     echo '<td class="text-center">' . number_format($value['expenses'], 2, ',', ' ') . ' руб.</td>';
                     echo '<td class="text-center">' . number_format($value['salary'], 2, ',', ' ') . ' руб.</td>';
                     echo '<td class="text-center">' . number_format($value['purchases'], 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($expenduteries_summ, 2, ',', ' ') . ' руб.</td>';
-
+                    echo '<td class="text-center">' . number_format($value['bonus'], 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center">' . number_format($value['cash_bonus'], 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center">' . number_format($value['unpaid_goods'], 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center">' . number_format($value['dividends'], 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center"><span class="badge badge-danger">' . number_format($all_expenditures, 2, ',', ' ') . ' руб.</span></td>';
                     echo '<td class="text-center">' . number_format($value['account_cashier'], 2, ',', ' ') . ' руб.</td>';
                     echo '<td class="text-center">' . number_format($value['account_balance'], 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center">' . number_format($total_depot, 2, ',', ' ') . ' 11руб.</td>';
 
-                    echo '<td class="text-center">' . number_format($total_depot, 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($value['cash_bonus'], 2, ',', ' ') . ' руб.</td>';
                     echo '<td class="text-center">' . number_format($debt, 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($value['unpaid_goods'], 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($assets, 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($revenue, 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center"><span class="badge badge-info">' . number_format($total_income, 2, ',', ' ') . ' руб.</span></td>';
+
+                    echo '<td class="text-center"><span class="badge badge-success">' . number_format($all_revenue, 2, ',', ' ') . ' руб.</span></td>';
                     echo '<td class="text-center">' . number_format($value['infusion'], 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($net_income, 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($value['dividends'], 2, ',', ' ') . ' руб.</td>';
-                    echo '<td class="text-center">' . number_format($value['bonus'], 2, ',', ' ').'  руб.</td>';
-                    echo '<td class="text-center">'. number_format($c, 2, ',', ' ') . ' руб.</td>';
+                    echo '<td class="text-center"><span class="badge badge-success">' . number_format($assets, 2, ',', ' ') . ' руб.</span></td>';
+
                     echo '</tr>';
                 endforeach;
             ?>
-            <tr>
-                <th class="text-center">—</th>
-                <th class="text-center">—</th>
-                <th class="text-center"><?php echo number_format($expenses_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($salary_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($purchases_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($expenduteries_summ_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center">-</th>
-                <th class="text-center">-</th>
-                <th class="text-center"><?php echo number_format($total_depot, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($cash_bonus_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($debt_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($unpaid_goods_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($assets, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($revenue_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($infusion_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center">                 —</th>
-                <th class="text-center"><?php echo number_format($net_income_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($dividends_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($bonus_total, 2, ',', ' '); ?>руб.</th>
-                <th class="text-center"><?php echo number_format($c_total, 2, ',', ' '); ?>руб.</th>
-            </tr>
-
-
             </tbody>
         </table>
         </div>

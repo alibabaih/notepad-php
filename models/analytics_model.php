@@ -19,7 +19,7 @@ class Analytics_Model extends Model {
     }
 
     function analyticsList() {
-        $sth = $this->db->prepare('SELECT * FROM reports');
+        $sth = $this->db->prepare('SELECT * FROM reports WHERE date >= "2015-08-01" ORDER BY date DESC ');
         $sth->execute();
         return $sth->fetchAll(); //return into controller
     }

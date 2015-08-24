@@ -7,7 +7,7 @@ class Dashboard_Model extends Model {
 
 
     function ajax() {
-        $sth = $this->db->prepare('SELECT date, account_cashier  FROM reports WHERE date >= (NOW() - INTERVAL 7 DAY);');
+        $sth = $this->db->prepare('SELECT date, account_cashier  FROM reports WHERE date >= (NOW() - INTERVAL 22 DAY);');
         $sth->execute();
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -44,7 +44,7 @@ class Dashboard_Model extends Model {
     }
 
     function revenue() {
-        $sth = $this->db->prepare('SELECT * FROM reports ORDER BY date DESC');
+        $sth = $this->db->prepare('SELECT * FROM reports WHERE date >= (NOW() - INTERVAL 22 DAY) ORDER BY date DESC');
         $sth->execute();
         return $sth->fetchAll();
     }
