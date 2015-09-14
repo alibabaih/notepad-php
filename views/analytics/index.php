@@ -13,111 +13,89 @@
     <div class="page-header">
         <h1><i class="fa fa-eye page-header-icon"></i>&nbsp;&nbsp;Аналитика</h1>
     </div>
+
     <!--How many products were in the beginning-->
-    <?php foreach ($this->goods as $key => $value) : ?>
-        <?php $bought_sum_n = ($value['quantity_august_Mochalova'] + $value['quantity_august_Oktabrskaya']) * ($value['isc_cost'] * EURO); ?>
-        <?php $bought_sum_total_n += $bought_sum_n; ?>
-        <?php $value['name']; ?>
-        <?php $value['isc_cost']*EURO; ?>
-        <?php $bought_sum_n; ?>
-    <?php endforeach;?>
-    <!--Related products at the beginnings-->
-    <?php foreach ($this->relatesProducts as $key => $value) : ?>
-        <?php $related_beginnings += $value['related']; ?>
-    <?php endforeach;?>
-    <h1>Инвентаризация на 01.04.2015</h1>
-    <div class="alert alert-info alert-dark">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        Общая стоимость склада на 01.04.2015 составляла: <strong>
-            <?php $depot = $bought_sum_total_n + $related_beginnings;
-                echo number_format($bought_sum_total_n, 2, ',', ' ') . "(товары Ли Вест) + " . number_format($related_beginnings, 2, ',', ' ') . "(сопутствующие товары) = " . number_format($depot, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
-    </div>
-    <!--/How many products were in beginning-->
-
-
-
     <div class="row">
-        <!--Related products-->
-        <div class="col-md-6">
-            <!--Related products were sold by us-->
-                <?php foreach ($this->analyticsList as $key => $value) : ?>
-                    <?php $sum_related_products_sold += $value['related_products']; ?>
-                <?php endforeach;?>
-                <?php echo 'Всего было продано сопутствующих товаров с 1 Апреля: <strong>' . number_format($sum_related_products_sold, 2, ',', ' ') . ' <i class="fa fa-rub"></i></strong><br />'; ?>
-            <!--/Related products were sold by us-->
 
-            <!--Related products were bought by us-->
-                <?php foreach ($this->relatesProducts as $key => $value) : ?>
-                    <?php $sum_related_products_bought += $value['related']; ?>
-                <?php endforeach;?>
-                <?php $sum_related_products_on_depot = $sum_related_products_bought - $sum_related_products_sold; ?>
-                <?php echo 'Сейчас сопутствующих товаров на складах на сумму: <strong>' . number_format($sum_related_products_on_depot, 2, ',', ' ') . ' <i class="fa fa-rub"></i></strong><br />'; ?>
-            <!--/Related products were bought by us-->
+        <?php foreach ($this->goods as $key => $value) : ?>
+            <?php $goods_beginnings += (($value['quantity_first_Mochalova'] + $value['quantity_first_Oktabrskaya']) * ($value['isc_cost'] * EURO)); ?>
+        <?php endforeach;?>
+        <!--Related products at the beginnings-->
+        <?php foreach ($this->relatesProductsd as $key => $value) : ?>
+            <?php $related_beginnings += $value['related']; ?>
+        <?php endforeach;?>
+        <div class="col-md-12">
+        <a href="#" class="label" style="margin-bottom: 10px;">Инвентаризация на 01.04.2015</a>
+        <div class="alert alert-info alert-dark">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Общая стоимость склада на 01.04.2015 составляла: <strong>
+                <?php $depot = $goods_beginnings + $related_beginnings;
+                    echo number_format($goods_beginnings, 2, ',', ' ') . "(товары Ли Вест) + " . number_format($related_beginnings, 2, ',', ' ') . "(сопутствующие товары) = " . number_format($depot, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
         </div>
-        <!--/Related products-->
-
-        <div class="col-md-6">
-            <!--How many products were bought-->
-                <?php foreach ($this->depotBought as $key => $value) : ?>
-                    <?php $bought_sum = $value['quantity'] * ($value['isc_cost'] * EURO); ?>
-                    <?php $bought_sum_total += $bought_sum; ?>
-                        <?php $value['name']; ?>
-                        <?php $value['quantity']; ?>
-                    <?php $value['isc_cost']*EURO; ?>
-                        <?php $bought_sum; ?>
-                <?php endforeach;?>
-                <?php  echo 'Всего было куплено товаров Ли Вест на сумму:  <strong>' . number_format($bought_sum_total, 2, ',', ' ') . ' <i class="fa fa-rub"></i></strong><br />'; ?>
-            <!--/How many products were bought-->
-
-            <!--How many products were sold-->
-                <?php foreach ($this->depotSold as $key => $value) : ?>
-                    <?php $sold_sum = $value['quantity'] * ($value['isc_cost'] * EURO); ?>
-                    <?php $sold_sum_total += $sold_sum; ?>
-                        <?php $value['name']; ?>
-                        <?php $value['quantity']; ?>
-                    <?php $value['isc_cost']*EURO; ?>
-                        <?php $sold_sum; ?>
-                <?php endforeach;?>
-                <?php echo 'Всего было продано товаров на сумму: <strong>' .  number_format($sold_sum_total, 2, ',', ' ') . ' <i class="fa fa-rub"></i></strong><br />'; ?>
-            <!--/How many products were sold-->
-        </div>
+            </div>
     </div>
-    <hr/>
+    <!--/How many products were in the beginning-->
+
+    <!--How many products were in August-->
     <div class="row">
         <?php foreach($this->goods as $key => $value): ?>
-            <?php $augustSum = ($value['quantity_august_Oktabrskaya'] + $value['quantity_august_Mochalova']) * $value['isc_cost'] * EURO;
-                $totalAugustSum += $augustSum;
-            ?>
+            <?php $goods_august += (($value['quantity_august_Oktabrskaya'] + $value['quantity_august_Mochalova']) * $value['isc_cost'] * EURO);?>
         <?php endforeach; ?>
         <?php foreach($this->augustRelatedBought as $key => $value): ?>
             <?php $augustRelatedBought = $value['related'];
             ?>
         <?php endforeach; ?>
         <?php foreach($this->augustRelatedSold as $key => $value): ?>
-            <?php $augustRelatedSold = $value['related_products']; ?>
+            <?php $augustRelatedSold = $value['related']; ?>
         <?php endforeach; ?>
         <?php $augustRelated = $augustRelatedBought - $augustRelatedSold; ?>
-        <?php $totalAugustSumWithRelated = $augustRelated + $totalAugustSum; ?>
+        <?php $totalAugustSumWithRelated = $augustRelated + $goods_august; ?>
         <div class="col-md-12">
-            <h1>Инвентаризация на 01.08.2015</h1>
+            <a href="#" class="label" style="margin-bottom: 10px;">Инвентаризация на 01.08.2015</a>
             <div class="alert alert-info alert-dark">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 Общая стоимость склада на 01.08.2015 составляла: <strong>
                     <?php //$depot = $bought_sum_total_n + $related_beginnings;
-                    echo number_format($totalAugustSum, 2, ',', ' ') . "(товары Ли Вест) + " . number_format($augustRelated, 2, ',', ' ') . "(сопутствующие товары) = " . number_format($totalAugustSumWithRelated, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
+                    echo number_format($goods_august, 2, ',', ' ') . "(товары Ли Вест) + " . number_format($augustRelated, 2, ',', ' ') . "(сопутствующие товары) = " . number_format($totalAugustSumWithRelated, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
             </div>
         </div>
     </div>
+    <!--/How many products were in August-->
 
-    <hr/>
-    <?php $total_depot =  $bought_sum_total_n - $sold_sum_total + $bought_sum_total +  $sum_related_products_bought - $sum_related_products_sold . 'rub.'; ?>
+    <!--How many products online-->
+    <div class="row">
+        <?php foreach($this->goods as $key => $value): ?>
+            <?php $goods += (($value['quantity_august_Oktabrskaya'] + $value['quantity_august_Mochalova']) * $value['isc_cost'] * EURO);?>
+        <?php endforeach; ?>
+        <?php foreach($this->sumRelatedBought as $key => $value): ?>
+            <?php $sumRelatedBought = $value['related'];?>
+        <?php endforeach; ?>
+        <?php foreach($this->sumRelatedSold as $key => $value): ?>
+            <?php $sumRelatedSold = $value['related']; ?>
+        <?php endforeach; ?>
 
-    <h1>Инвентаризация on-line</h1>
-    <div class="alert alert-info alert-dark">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        Итого цена склада на данный момент с учётом сопутствующих товаров равна:  <strong><?php echo number_format($total_depot, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
+        <?php foreach($this->sumLiwestBought as $key => $value): ?>
+            <?php $sumLiwestBought += ($value['total_bought'] * ($value['isc_cost'] * EURO));
+            ?>
+        <?php endforeach; ?>
+        <?php foreach($this->sumLiwestSold as $key => $value): ?>
+            <?php $sumLiwestSold += ($value['total_sold'] * ($value['isc_cost'] * EURO)); ?>
+        <?php endforeach; ?>
+
+        <?php $sumRelated = $sumRelatedBought - $sumRelatedSold; ?>
+        <?php $sumLiwest = $goods + ($sumLiwestBought - $sumLiwestSold); ?>
+        <?php $totalSumWithRelated = $sumRelated + $sumLiwest; ?>
+        <div class="col-md-12">
+            <a href="#" class="label" style="margin-bottom: 10px;">Инвентаризация on-line</a>
+            <div class="alert alert-info alert-dark">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                Итого цена склада равна: <strong>
+                    <?php //$depot = $bought_sum_total_n + $related_beginnings;
+                    echo number_format($sumLiwest, 2, ',', ' ') . "(товары Ли Вест) + " . number_format($sumRelated, 2, ',', ' ') . "(сопутствующие товары) = " . number_format($totalSumWithRelated, 2, ',', ' '); ?> <i class="fa fa-rub"></i></strong>
+            </div>
+        </div>
     </div>
-    <?php //echo $bought_sum_total_n . ' - ' . $sold_sum_total . ' + ' . $bought_sum_total . ' + ' .  $sum_related_products_bought . ' - ' . $sum_related_products_sold; ?>
+    <!--/How many products online-->
 
 
     <div class="panel">
@@ -154,29 +132,27 @@
                     </thead>
                     <tbody>
                     <?php
-                    $expenses_all; $all_salary; $all_purchases; $all_bonus; $all_cash_bonus; $all_unpaid_goods; $all_dividends; $all_sold_in_debt; $all_infusion;
-                        foreach ($this->analyticsListJuly as $key => $value) :
-                            $time1 = strtotime($value['date']);
-                            $myFormatForView1 = date("M.Y", $time1);
-                            $expenses_all += $value['expenses'];
-                            $all_salary += $value['salary'];
-                            $all_purchases += $value['purchases'];
-                            $all_bonus += $value['bonus'];
-                            $all_cash_bonus += $value['cash_bonus'];
-                            $all_unpaid_goods += $value['unpaid_goods'];
-                            $all_dividends += $value['dividends'];
+                        $expenses_all; $all_salary; $all_purchases; $all_bonus; $all_cash_bonus; $all_unpaid_goods; $all_dividends; $all_sold_in_debt; $all_infusion;
+                            foreach ($this->analyticsListAugust as $key => $value) :
+                                $time1 = strtotime($value['date']);
+                                $myFormatForView1 = date("M.Y", $time1);
+                                $expenses_all += $value['expenses'];
+                                $all_salary += $value['salary'];
+                                $all_purchases += $value['purchases'];
+                                $all_bonus += $value['bonus'];
+                                $all_cash_bonus += $value['cash_bonus'];
+                                $all_unpaid_goods += $value['unpaid_goods'];
+                                $all_dividends += $value['dividends'];
 
-                            $all_account_cashier += $value['account_cashier'];
-                            $all_account_balance += $value['account_balance'];
+                                $all_account_cashier += $value['account_cashier'];
+                                $all_account_balance += $value['account_balance'];
 
-                            $all_sold_in_debt += $value['sold_in_debt'];
-                            $all_infusion += $value['infusion'];
-                        endforeach;
-                    $all_expenditures = $expenses_all + $all_salary + $all_purchases + $all_bonus + $all_cash_bonus + $all_unpaid_goods + $all_dividends;
-                    $all_revenue = $all_account_balance + $all_account_cashier + $all_infusion;
-                    $total_income = $all_revenue - $all_expenditures;
-
-
+                                $all_sold_in_debt += $value['sold_in_debt'];
+                                $all_infusion += $value['infusion'];
+                            endforeach;
+                        $all_expenditures = $expenses_all + $all_salary + $all_purchases + $all_bonus + $all_cash_bonus + $all_unpaid_goods + $all_dividends;
+                        $all_revenue = $all_account_balance + $all_account_cashier + $all_infusion;
+                        $total_income = $all_revenue - $all_expenditures;
                     ?>
                     <tr>
                         <th class="text-center">Август 2015</th>
@@ -201,6 +177,99 @@
                                 //check on current date and existence of the value
                                 $currentDate = date('Y-m-d');
                                 $yesterday = date("Y-m-d", time() - 86400);
+                            ?>
+                            <?php  foreach ($this->cashierTop as $key => $value):
+                                if($value['date']  == $currentDate) {
+                                    $cashierTopOffice = $value['account_cashier'];
+                                    //echo '<span class="tooltips-demo" data-toggle="tooltip" data-placement="top" data-original-title="за текущий день на'.TOP_OFFICE.'">' . $value['account_cashier'] . 'руб.</span>';
+                                }
+                            endforeach;
+                            ?>
+                            <?php foreach ($this->cashierBottom as $key => $value):
+                                if($value['date'] == $currentDate) {
+                                    $cashierBottomOffice = $value['account_cashier'];
+                                    //echo '<span class="tooltips-demo" data-toggle="tooltip" data-placement="top" data-original-title="за текущий день на'.BOTTOM_OFFICE.'">' . $value['account_cashier'] . 'руб.</span>';
+                                }
+                            endforeach; ?>
+                            <?php $cashierAllOffices = $cashierTopOffice + $cashierBottomOffice; ?>
+                            <?php echo number_format($cashierAllOffices, 2, ',', ' '); ?>руб.
+                        </th>
+                        <th class="text-center"><?php echo number_format($value['account_balance'], 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center"><?php echo number_format($value['liwest_balance'], 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center"><?php echo number_format($total_depot, 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center">
+                            <?php $actives = $cashierTopOffice + $cashierBottomOffice + $total_depot + $value['liwest_balance']; ?>
+                            <?php echo '<span class="badge badge-success">' . number_format($actives, 2, ',', ' '); ?>руб.</span>
+                        </th>
+<!--                       Make variables null-->
+                        <?php
+                            $empty_val = 0;
+                            $expenses_all = $empty_val;
+                            $all_salary = $empty_val;
+                            $all_purchases = $empty_val;
+                            $all_bonus = $empty_val;
+                            $all_cash_bonus = $empty_val;
+                            $all_unpaid_goods = $empty_val;
+                        $all_account_balance = $empty_val;
+                            $all_account_cashier = $empty_val;
+                            $all_dividends = $empty_val;
+                            $all_expenditures = $empty_val;
+                            $all_sold_in_debt = $empty_val;
+                            $all_infusion = $empty_val;
+                            $all_revenue = $empty_val;
+                            $total_income = $empty_val;
+                            //do not clean
+                            $total_depot;
+                            $actives = $empty_val;
+
+                        ?>
+                    </tr>
+                    <?php
+                    $expenses_all; $all_salary; $all_purchases; $all_bonus; $all_cash_bonus; $all_unpaid_goods; $all_dividends; $all_sold_in_debt; $all_infusion;
+                    foreach ($this->analyticsListSeptember as $key => $value) :
+                        $time1 = strtotime($value['date']);
+                        $myFormatForView1 = date("M.Y", $time1);
+                        $expenses_all += $value['expenses'];
+                        $all_salary += $value['salary'];
+                        $all_purchases += $value['purchases'];
+                        $all_bonus += $value['bonus'];
+                        $all_cash_bonus += $value['cash_bonus'];
+                        $all_unpaid_goods += $value['unpaid_goods'];
+                        $all_dividends += $value['dividends'];
+
+                        $all_account_cashier += $value['account_cashier'];
+                        $all_account_balance += $value['account_balance'];
+
+                        $all_sold_in_debt += $value['sold_in_debt'];
+                        $all_infusion += $value['infusion'];
+                    endforeach;
+                    $all_expenditures = $expenses_all + $all_salary + $all_purchases + $all_bonus + $all_cash_bonus + $all_unpaid_goods + $all_dividends;
+                    $all_revenue = $all_account_balance + $all_account_cashier + $all_infusion;
+                    $total_income = $all_revenue - $all_expenditures;
+                    ?>
+                    <tr>
+                        <th class="text-center">Сентябрь 2015</th>
+                        <th class="text-center"><?php echo number_format($expenses_all, 2, ',', ' '); ?> руб.</th>
+                        <th class="text-center"><?php echo number_format($all_salary, 2, ',', ' '); ?> руб.</th>
+                        <th class="text-center"><?php echo number_format($all_purchases, 2, ',', ' '); ?> руб.</th>
+                        <th class="text-center"><?php echo number_format($all_bonus, 2, ',', ' '); ?> руб.</th>
+                        <th class="text-center"><?php echo number_format($all_cash_bonus, 2, ',', ' '); ?> руб.</th>
+                        <th class="text-center"><?php echo number_format($all_unpaid_goods, 2, ',', ' '); ?> руб.</th>
+                        <th class="text-center"><?php echo number_format($all_dividends, 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center"><span class="badge badge-danger"><?php echo number_format($all_expenditures, 2, ',', ' '); ?>руб.</span></th>
+
+                        <th class="text-center"><?php echo number_format($all_sold_in_debt, 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center"><?php echo number_format($all_infusion, 2, ',', ' '); ?>руб.</th>
+                        <th class="text-center"><span class="badge badge-success"><?php echo number_format($all_revenue, 2, ',', ' '); ?>руб.</span></th>
+
+                        <th class="text-center"><span class="badge badge-info"><?php echo number_format($total_income, 2, ',', ' '); ?>руб.</span></th>
+
+                        <!-- Касса -->
+                        <th class="text-center">
+                            <?php
+                            //check on current date and existence of the value
+                            $currentDate = date('Y-m-d');
+                            $yesterday = date("Y-m-d", time() - 86400);
                             ?>
                             <?php  foreach ($this->cashierTop as $key => $value):
                                 if($value['date']  == $currentDate) {

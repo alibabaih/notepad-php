@@ -21,7 +21,7 @@
                 <div class="panel-heading">
                     <span class="panel-title">Выручка, расход</span>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="height: 300px; overflow-y: overlay;">
                     <table  style="font-size: 13px;"  cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -70,16 +70,18 @@
                             $promissory = $loan - $deposit;
                         endforeach;
                     ?>
-                    <p>Продано в долг — долг возвращён с 1 апреля 2014 года:
+                    <div class="note">
+                    Продано в долг — долг возвращён с 1 апреля 2014 года:
+                        <hr />
                         <?php
                             if($promissory >= 0){
-                                echo ' нам должны '. number_format($promissory, 2, ',', ' '). ' руб.';
+                                echo ' <span class="badge badge-danger">нам должны '. number_format($promissory, 2, ',', ' '). ' руб.</span>';
                             }
                             if($promissory <= 0){
-                                echo ' мы должны '. number_format($promissory, 2, ',', ' '). ' руб.';
+                                echo ' <span class="badge badge-info">мы должны '. number_format($promissory, 2, ',', ' '). ' руб.</span>';
                             }
                         ?>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,14 +96,14 @@
                 </div>
                 <div class="panel-body">
                     <?php
-                    $now = date('Y-m-d',strtotime("now"));
-                    $previousWeek = date('Y-m-d',strtotime("-1 week"));
-                    echo $now . ' '. $previousWeek;
+//                    $now = date('Y-m-d',strtotime("now"));
+//                    $previousWeek = date('Y-m-d',strtotime("-1 week"));
+//                    echo $now . ' '. $previousWeek;
                     ?>
 
                     <form class="form-inline" method="post" action="<? echo URL; ?>dashboard/period" class="form">
                         <div class="form-group">
-                            <label>Подсчёт суммы склада на дату: </label>
+                            <label>Подсчёт суммы склада на дату:&nbsp;&nbsp;</label>
                             <input type="text" class="form-control bs-datepicker-example" name="date" placeholder="Дата">
                         </div>
                         <button type="submit" class="btn btn-primary">Сформировать</button>

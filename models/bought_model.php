@@ -14,7 +14,7 @@ class Bought_Model extends Model {
 
     function boughtList($office) {
         $sth = $this->db->prepare('SELECT name, quantity, date, id_bought FROM bought INNER JOIN goods
-          WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
+          WHERE date >= (NOW() - INTERVAL 22 DAY)
           AND bought.good_id = goods.id
           AND shop = "'.$office.'"
           ORDER BY date DESC');
@@ -24,7 +24,7 @@ class Bought_Model extends Model {
 
     function boughtListAll() {
         $sth = $this->db->prepare('SELECT name, quantity, date, id_bought, shop FROM bought INNER JOIN goods
-          WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
+          WHERE date >= (NOW() - INTERVAL 22 DAY)
           AND bought.good_id = goods.id
           ORDER BY date DESC');
         $sth->execute();

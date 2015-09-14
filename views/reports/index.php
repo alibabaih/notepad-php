@@ -279,7 +279,7 @@
             $myFormatForView = date("d.m.Y", $time);
             $all_expenses = $value['salary'] + $value['purchases'] + $value['bonus'] + $value['expenses'] + $value['dividends'] + $value['cash_bonus'] + $value['unpaid_goods'];
             $revenue = $value['non_cash_payment'] + $value['cash_payment'] + $value['infusion'];
-            $total = $value['non_cash_payment'] + $value['cash_payment'];
+            $total = $value['non_cash_payment'] + $value['cash_payment'] - $value['services'];
             $debt = $value['sold_in_debt'] - $value['returned_to_duty'];
             $shop_name = 0;
             if($value['shop'] == TOP_OFFICE) {
@@ -365,55 +365,66 @@
                     </div>
                 <?php endif; ?>
                 <hr/>
+
                 <div class="row">
-                    <div class="col-sm-3">
-                        <span class="badge badge-danger">Все расходы: <?php echo number_format($all_expenses, 2, ',', ' '); ?> руб.</span> <br />
+                    <div class="col-sm-7">
+                        <span class="badge badge-danger"><?php echo EXPENDETURES . ' ' . number_format($all_expenses, 2, ',', ' '); ?> руб.</span> <br />
                         <?php if(Session::get('role') == ADMIN) : ?>
                         <?php echo '<em>Зарплата ('.$value['salary'] .') + Закупка продукции ('. $value['purchases'] .') + Выдано бонусов деньгами ('. $value['bonus'] .') + Коммерческие расходы ('. $value['expenses'] .') + Дивиденды ('. $value['dividends'] .') + Оплата бонусами ('. $value['cash_bonus'] . ') + Неоплаченный товар (товар в подарок) (' . $value['unpaid_goods'] . ')</em>'; ?>
                         <?php endif; ?>
                     </div>
-                    <div class="col-sm-3">
-                        <span class="badge badge-info">Выручка: <?php echo number_format($revenue, 2, ',', ' '); ?> руб.</span> <br />
+                    <div class="col-sm-5">
+                        <span class="badge badge-info"><?php echo REVENUE . ' ' . number_format($revenue, 2, ',', ' '); ?> руб.</span> <br />
                         <?php if(Session::get('role') == ADMIN) : ?>
                             <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') +  Вливания ('. $value['infusion'] .')</em>'; ?>
                         <?php endif; ?>
                     </div>
-                    <div class="col-sm-3">
-                        <span class="badge badge-success">Итог продаж: <?php echo number_format($total, 2, ',', ' '); ?> руб. из них Услуги на: <?php echo number_format($value['services'], 2, ',', ' '); ?>  руб.</span><br />
-                        <?php if(Session::get('role') == ADMIN) : ?>
-                            <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') + Оплата за услуги ('. $value['services'] .')</em>'; ?>
-                        <?php endif; ?>
-                    </div>
-                    <div class="col-sm-3">
-                        <span class="badge badge-danger">Дебет(существующий долг): <?php echo number_format($debt, 2, ',', ' '); ?> руб.</span><br />
-                        <?php if(Session::get('role') == ADMIN) : ?>
-                            <?php echo '<em>Продано в долг ('.$value['sold_in_debt'] .') - Долг возвращён ('. $value['returned_to_duty'] .')</em>'; ?>
-                        <?php endif; ?>
-                    </div>
+
                 </div>
-                <?php if(Session::get('role') == ADMIN) { echo '<hr/>'; } ?>
-                <div class="row">
-                <div class="col-sm-3">
+            <hr />
+            <div class="row">
+                <div class="col-sm-4">
+                    <span class="badge badge-success"><?php echo PAYMENT_FOR_GOOD . ' ' . number_format($total, 2, ',', ' '); ?> руб. </span><br />
                     <?php if(Session::get('role') == ADMIN) : ?>
-                        Запись создана: <?php echo $value['modified']; ?>
+                        <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') - Оплата за услуги ('. $value['services'] .')</em>'; ?>
                     <?php endif; ?>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
+                    <span class="badge badge-success"> <?php echo PAYMENT_FOR_SERVICES . ' ' . number_format($value['services'], 2, ',', ' '); ?>  руб.</span><br />
                     <?php if(Session::get('role') == ADMIN) : ?>
-                        Запись обновлена: <?php echo $value['updated']; ?>
+                        <?php echo '<em>Безналичная оплата ('.$value['non_cash_payment'] .') + Наличная оплата ('. $value['cash_payment'] .') - Оплата за услуги ('. $value['services'] .')</em>'; ?>
                     <?php endif; ?>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
+                    <span class="badge badge-danger"><?php echo DEBT . ' ' . number_format($debt, 2, ',', ' '); ?> руб.</span><br />
                     <?php if(Session::get('role') == ADMIN) : ?>
-                        Создано: <?php echo $value['created_by']; ?>
-                    <?php endif; ?>
-                </div>
-                <div class="col-sm-3">
-                    <?php if(Session::get('role') == ADMIN) : ?>
-                        Изменено: <?php echo $value['modified_by']; ?>
+                        <?php echo '<em>Продано в долг ('.$value['sold_in_debt'] .') - Долг возвращён ('. $value['returned_to_duty'] .')</em>'; ?>
                     <?php endif; ?>
                 </div>
             </div>
+                <?php if(Session::get('role') == ADMIN) { echo '<hr/>'; } ?>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <?php if(Session::get('role') == ADMIN) : ?>
+                            Запись создана: <?php echo $value['modified']; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?php if(Session::get('role') == ADMIN) : ?>
+                            Запись обновлена: <?php echo $value['updated']; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?php if(Session::get('role') == ADMIN) : ?>
+                            Создано: <?php echo $value['created_by']; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?php if(Session::get('role') == ADMIN) : ?>
+                            Изменено: <?php echo $value['modified_by']; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
         </div>
     </div>
     <?php endforeach; ?>

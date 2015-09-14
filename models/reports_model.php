@@ -10,7 +10,7 @@ class Reports_Model extends Model {
         $sth = $this->db->prepare('SELECT *
           FROM reports
           WHERE shop = "'.$office.'"
-          AND date_format(date, \'%Y%m\') = date_format(now(), \'%Y%m\')
+          AND date >= (NOW() - INTERVAL 22 DAY)
           ORDER BY date DESC
         ');
         $sth->execute();
@@ -21,7 +21,7 @@ class Reports_Model extends Model {
         date('Y-m-d');
         $sth = $this->db->prepare('SELECT *
             FROM reports
-            WHERE date_format(date, \'%Y%m\') = date_format(now(), \'%Y%m\')
+            WHERE date >= (NOW() - INTERVAL 22 DAY)
             ORDER BY date DESC
         ');
         $sth->execute();

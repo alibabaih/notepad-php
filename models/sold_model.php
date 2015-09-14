@@ -14,9 +14,9 @@ class Sold_Model extends Model {
 
 
     function soldList($office) {
-        $sth = $this->db->prepare('SELECT name, quantity, date, id_sold
+        $sth = $this->db->prepare('SELECT *
           FROM sold INNER JOIN goods
-          WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
+          WHERE date >= (NOW() - INTERVAL 30 DAY)
           AND goods.id = sold.good_id
           AND shop = "'.$office.'" ORDER BY date DESC');
         $sth->execute();
@@ -24,9 +24,9 @@ class Sold_Model extends Model {
     }
 
     function soldListAll() {
-        $sth = $this->db->prepare('SELECT name, quantity, date, id_sold, shop
+        $sth = $this->db->prepare('SELECT *
           FROM sold INNER JOIN goods
-          WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
+          WHERE date >= (NOW() - INTERVAL 30 DAY)
           AND sold.good_id = goods.id ORDER BY date DESC');
         $sth->execute();
         return $sth->fetchAll();

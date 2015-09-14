@@ -14,7 +14,7 @@ class Transaction_Model extends Model {
     function transactionList() {
         $sth = $this->db->prepare('SELECT transactions.id, name, quantity, date, items_were_send_to, items_were_send_from
           FROM transactions INNER JOIN goods
-          WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
+          WHERE date >= (NOW() - INTERVAL 22 DAY)
           AND transactions.good_id = goods.id ORDER BY date DESC');
         $sth->execute();
         return $sth->fetchAll();
@@ -23,7 +23,7 @@ class Transaction_Model extends Model {
     function transactionRelatedList() {
         $sth = $this->db->prepare('SELECT *
           FROM transactions_related_items
-          WHERE MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())
+          WHERE date >= (NOW() - INTERVAL 22 DAY)
           ORDER BY date DESC');
         $sth->execute();
         return $sth->fetchAll();

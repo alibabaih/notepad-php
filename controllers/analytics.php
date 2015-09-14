@@ -54,8 +54,9 @@ class Analytics extends Controller {
         $this->view->relatesProducts = $this->model->relatesProducts();
         $this->view->goods = $this->model->goods();
 
-
-
+        //related products in April
+        $date = '2015-04-01';
+        $this->view->relatesProductsd = $this->model->relatesProductsd($date);
         //how much cost store
         $this->view->howMuchCostStore = $this->model->howMuchCostStore();
         //sold total goods
@@ -63,6 +64,11 @@ class Analytics extends Controller {
 
         $this->view->augustRelatedBought = $this->model->augustRelatedBought();
         $this->view->augustRelatedSold = $this->model->augustRelatedSold();
+
+        $this->view->sumRelatedBought = $this->model->sumRelatedBought();
+        $this->view->sumRelatedSold = $this->model->sumRelatedSold();
+        $this->view->sumLiwestBought = $this->model->sumLiwestBought();
+        $this->view->sumLiwestSold = $this->model->sumLiwestSold();
         $this->view->render('analytics/index');
     }
 
