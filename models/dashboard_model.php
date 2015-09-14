@@ -83,16 +83,16 @@ class Dashboard_Model extends Model {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function related($date) {
-        $sth = $this->db->prepare('SELECT SUM(related.related) AS reserve FROM related WHERE related.date <= "'. $date .'"');
+    function relatedBought ($date) {
+        $sth = $this->db->prepare('SELECT SUM(related.related) AS related FROM related WHERE date <="'.$date.'"');
         $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC); //return into controller
+        return $sth->fetchAll();
     }
 
-    function relatedSold($date) {
-        $sth = $this->db->prepare('SELECT SUM(reports.related_products) AS sold_reserve FROM reports WHERE related.date <= "'. $date .'"');
+    function relatedSold ($date) {
+        $sth = $this->db->prepare('SELECT SUM(reports.related_products) AS related FROM reports WHERE date <="'.$date.'"');
         $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC); //return into controller
+        return $sth->fetchAll();
     }
 
     function items($date) {

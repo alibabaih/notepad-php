@@ -71,7 +71,7 @@ class Dashboard extends Controller {
         $pieces = explode(".", $dateGet);
         $date = '20' . $pieces[2] . '-' . $pieces[1] . '-' . $pieces[0];
 
-        $this->view->related = $this->model->related($date);
+        $this->view->relatedBought = $this->model->relatedBought($date);
         $this->view->relatedSold = $this->model->relatedSold($date);
         $this->view->items = $this->model->items($date);
         $this->view->items2 = $this->model->items2($date);

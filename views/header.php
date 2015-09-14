@@ -33,5 +33,7 @@
     <script src="<?php echo URL; ?>assets/javascripts/ie.min.js"></script>
     <![endif]-->
 
+    <script src="<?php echo URL; ?>assets/javascripts/jquery.min.js"></script>
+
 </head>
 

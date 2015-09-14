@@ -1,3 +1,5 @@
+
+
 <div id="content-wrapper">
     <div class="page-header">
         <h1><i class="fa fa-upload page-header-icon"></i>&nbsp;&nbsp;Сформированный отчёт <small><?php print_r($this->date); ?></small></h1>
@@ -11,19 +13,12 @@
                 <div class="col-sm-12">
                     <div class="note">
                         <h4 class="note-title">Сопутствующие товары</h4>
-                    <?php
-                        foreach($this->relatedSold as $key => $value):
-                            $related_products = $value['sold_reserve'];
-                        endforeach;
-                    ?>
-                    <?php
-                        foreach($this->related as $key => $value):
-                            $reserve = $value['reserve'];
-                        endforeach;
-                        $related = $reserve - $related_products;
-                        echo 'Купленные товары: ' . number_format($reserve, 2, ',', ' ') . ' руб. Проданные товары: '. number_format($related_products, 2, ',', ' ') .' руб.';
-                        echo '<hr/> <p><span class="badge badge-success">Итого: ' . number_format($related, 2, '.', ' ') .' руб.</span></p>';
-                    ?>
+                    <?php foreach($this->relatedSold as $key => $value): $relatedSold = $value['related']; endforeach; ?>
+                    <?php foreach($this->relatedBought as $key => $value): $relatedBought = $value['related']; endforeach; ?>
+                        <?php $related = $relatedBought - $relatedSold; ?>
+                        Купленные товары: <?php echo number_format($relatedBought, 2, ',', ' ') ?> руб. Проданные товары: <?php echo number_format($relatedSold, 2, ',', ' ') ?> руб.
+                        <hr/>
+                        <p><span class="badge badge-success">Итого: <?php echo number_format($related, 2, '.', ' ') ?> руб.</span></p>
                     </div>
                 </div>
             </div>
@@ -74,7 +69,7 @@
                     <?php global $total_depot_cost;
                     $total_depot_cost = $related + $liwest_depot_cost;
                     $total_depot_cost = number_format($total_depot_cost, 2, '.', ' ');
-                    echo '<span class="badge badge-danger">Общая сумма склада на настоящий момент с учётом сопутствующих товаров ' . $total_depot_cost . ' руб.</span>';
+                    echo '<span class="badge badge-danger">Общая сумма склада на настоящий момент с учётом сопутствующих товаров <em class="depot">' . $total_depot_cost . ' </em>руб.</span>';
                     ?>
                 </div>
             </div>
