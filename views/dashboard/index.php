@@ -29,7 +29,7 @@
                             <th class="text-center">Магазин</th>
                             <th class="text-center">Выручка</th>
                             <th class="text-center">Расход</th>
-                            <th class="text-center">Итого (выручка и расход)</th>
+                            <th class="text-center"><?php echo PROFIT; ?></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -12,13 +12,11 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="note">
-                        <h4 class="note-title">Сопутствующие товары</h4>
                     <?php foreach($this->relatedSold as $key => $value): $relatedSold = $value['related']; endforeach; ?>
                     <?php foreach($this->relatedBought as $key => $value): $relatedBought = $value['related']; endforeach; ?>
-                        <?php $related = $relatedBought - $relatedSold; ?>
-                        Купленные товары: <?php echo number_format($relatedBought, 2, ',', ' ') ?> руб. Проданные товары: <?php echo number_format($relatedSold, 2, ',', ' ') ?> руб.
-                        <hr/>
-                        <p><span class="badge badge-success">Итого: <?php echo number_format($related, 2, '.', ' ') ?> руб.</span></p>
+                    <?php $related = $relatedBought - $relatedSold; ?>
+                    <h5 style="display: inline-block;" class="note-title">Сопутствующие товары на <?php print_r($this->date); ?> : </h5> <span class="badge badge-success"><?php echo number_format($related, 2, '.', ' ') ?> руб.</span>
+                    <h5 class="note-title add-depot">Общая сумма склада на <?php print_r($this->date); ?> с учётом сопутствующих товаров: </h5>
                     </div>
                 </div>
             </div>
@@ -69,7 +67,7 @@
                     <?php global $total_depot_cost;
                     $total_depot_cost = $related + $liwest_depot_cost;
                     $total_depot_cost = number_format($total_depot_cost, 2, '.', ' ');
-                    echo '<span class="badge badge-danger">Общая сумма склада на настоящий момент с учётом сопутствующих товаров <em class="depot">' . $total_depot_cost . ' </em>руб.</span>';
+                    echo 'Общая сумма склада на настоящий момент с учётом сопутствующих товаров <span class="badge badge-danger depot">' . $total_depot_cost . ' руб.</span>';
                     ?>
                 </div>
             </div>
@@ -77,3 +75,10 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //alert(jQuery.fn.jquery);
+        $('.depot').clone().appendTo('.add-depot');
+    });
+
+</script>
