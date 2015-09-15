@@ -95,12 +95,6 @@
                     <span class="panel-title">Сформировать отчёт сколько стоил склад на определённую дату</span>
                 </div>
                 <div class="panel-body">
-                    <?php
-//                    $now = date('Y-m-d',strtotime("now"));
-//                    $previousWeek = date('Y-m-d',strtotime("-1 week"));
-//                    echo $now . ' '. $previousWeek;
-                    ?>
-
                     <form class="form-inline" method="post" action="<? echo URL; ?>dashboard/period" class="form">
                         <div class="form-group">
                             <label>Подсчёт суммы склада на дату:&nbsp;&nbsp;</label>
@@ -112,10 +106,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 </div>

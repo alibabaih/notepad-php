@@ -27,32 +27,24 @@ class Analytics extends Controller {
         $start = "2015-07-01";
         $end = "2015-07-31";
         $this->view->analyticsListJuly = $this->model->analyticsListByMonth($start, $end);
-
         $start = "2015-08-01";
         $end = "2015-08-31";
         $this->view->analyticsListAugust = $this->model->analyticsListByMonth($start, $end);
-        $office = BOTTOM_OFFICE;
-        $this->view->cashierBottomAugust = $this->model->cashier($office, $end);
-        $office = TOP_OFFICE;
-        $this->view->cashierTopAugust = $this->model->cashier($office, $end);
+        $this->view->cashierAugust = $this->model->cashier($end);
         $this->view->depotListByAugustBought = $this->model->depotListByMonthBought($end);
         $this->view->depotListByAugustSold = $this->model->depotListByMonthSold($end);
         $this->view->sumRelatedSoldAugust = $this->model->sumRelatedSoldByMonth($end);
         $this->view->sumRelatedBoughtAugust = $this->model->sumRelatedBoughtByMonth( $end);
-
+        $this->view->cashier_bankAugust = $this->model->cashier_bank($end);
         $start = "2015-09-01";
         $end = "2015-09-30";
         $this->view->analyticsListSeptember = $this->model->analyticsListByMonth($start, $end);
-        $office = BOTTOM_OFFICE;
-        $this->view->cashierBottomSeptember = $this->model->cashier($office, $end);
-        $office = TOP_OFFICE;
-        $this->view->cashierTopSeptember = $this->model->cashier($office, $end);
+        $this->view->cashierSeptember = $this->model->cashier($end);
         $this->view->depotListBySeptemberBought = $this->model->depotListByMonthBought($end);
         $this->view->depotListBySeptemberSold = $this->model->depotListByMonthSold($end);
         $this->view->sumRelatedSoldSeptember = $this->model->sumRelatedSoldByMonth($end);
         $this->view->sumRelatedBoughtSeptember = $this->model->sumRelatedBoughtByMonth($end);
-
-
+        $this->view->cashier_bankSeptember = $this->model->cashier_bank($end);
         $start = "2015-10-01";
         $end = "2015-10-31";
         $this->view->analyticsListOctober = $this->model->analyticsListByMonth($start, $end);
@@ -62,15 +54,10 @@ class Analytics extends Controller {
         $start = "2015-12-01";
         $end = "2015-12-31";
         $this->view->analyticsListDecember = $this->model->analyticsListByMonth($start, $end);
-
-
-
-
         $this->view->depotSold = $this->model->depotSold();
         $this->view->depotBought = $this->model->depotBought();
         $this->view->relatesProducts = $this->model->relatesProducts();
         $this->view->goods = $this->model->goods();
-
         //related products in April
         $date = '2015-04-01';
         $this->view->relatesProductsd = $this->model->relatesProductsd($date);
@@ -81,7 +68,6 @@ class Analytics extends Controller {
 
         $this->view->augustRelatedBought = $this->model->augustRelatedBought();
         $this->view->augustRelatedSold = $this->model->augustRelatedSold();
-
         $this->view->sumRelatedBought = $this->model->sumRelatedBought();
         $this->view->sumRelatedSold = $this->model->sumRelatedSold();
         $this->view->sumLiwestBought = $this->model->sumLiwestBought();
@@ -89,6 +75,27 @@ class Analytics extends Controller {
         $this->view->render('analytics/index');
     }
 
+    function monthByShop() {
+        $office = $_POST['shop'];
+        $this->view->goods = $this->model->goods($office);
+        $start = "2015-08-01";
+        $end = "2015-08-31";
+        $this->view->analyticsListAugust = $this->model->analyticsListByMonth($start, $end, $office);
+        $this->view->cashierAugust = $this->model->cashier($office, $end);
+        $this->view->depotListByAugustBought = $this->model->depotListByMonthBought($end, $office);
+        $this->view->depotListByAugustSold = $this->model->depotListByMonthSold($end, $office);
+        $this->view->sumRelatedSoldAugust = $this->model->sumRelatedSoldByMonth($end, $office);
+        $this->view->sumRelatedBoughtAugust = $this->model->sumRelatedBoughtByMonth( $end, $office);
+        $start = "2015-09-01";
+        $end = "2015-09-30";
+        $this->view->analyticsListSeptember = $this->model->analyticsListByMonth($start, $end, $office);
+        $this->view->cashierSeptember = $this->model->cashier($office, $end);
+        $this->view->depotListBySeptemberBought = $this->model->depotListByMonthBought($end, $office);
+        $this->view->depotListBySeptemberSold = $this->model->depotListByMonthSold($end, $office);
+        $this->view->sumRelatedSoldSeptember = $this->model->sumRelatedSoldByMonth($end, $office);
+        $this->view->sumRelatedBoughtSeptember = $this->model->sumRelatedBoughtByMonth( $end, $office);
+        $this->view->render('analytics/month-by-shop');
+    }
 
     function logout() {
         Session::destroy();
