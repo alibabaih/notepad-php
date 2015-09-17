@@ -20,7 +20,24 @@ class Dashboard extends Controller {
 //
 //        }
 
-        $this->view->notes = $this->model->notes();
+        for($i = 0; $i < 12; $i++) {
+            $data = $this->model->notes();
+            $month = $data[8]; //put $i
+            $this->view->month = $month;
+            for($j = 0; $j <= sizeof($month); $j++) {
+                //$this->view->notes  = $month[0][date];
+                $date = DateTime::createFromFormat('Y-m-d', $month[5][date]); //put $j
+                $format_date = $date->format('j');
+                //$this->view->notes = $format_date;
+                for($k = 1; $k <= 31; $k++) {
+//                    if($k == $format_date) {
+                        $this->view->notes = $month[5]; //put $k
+//                        $records = $month[$j];
+//                        $this->view->notes = $records;
+//                    }
+                }
+            }
+        }
         $this->view->render('dashboard/index');
     }
 
