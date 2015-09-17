@@ -7,6 +7,7 @@
 <script>
     $(document).ready(function() {
         $('select').material_select();
+        $(".button-collapse").sideNav();
     });
 </script>
     </body>

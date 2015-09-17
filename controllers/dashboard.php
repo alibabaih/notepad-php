@@ -13,28 +13,26 @@ class Dashboard extends Controller {
     }
 
     function index() {
-        $now = date('Y-m-d',strtotime("now"));
-        $previousWeek = date('Y-m-d',strtotime("-1 week"));
-//        $data = $this->model->notes();
-//        for($i = 1; $i <= 12; $i++) {
-//
-//        }
 
-        for($i = 0; $i < 12; $i++) {
-            $data = $this->model->notes();
-            $month = $data[8]; //put $i
-            $this->view->month = $month;
-            for($j = 0; $j <= sizeof($month); $j++) {
-                //$this->view->notes  = $month[0][date];
-                $date = DateTime::createFromFormat('Y-m-d', $month[5][date]); //put $j
-                $format_date = $date->format('j');
-                //$this->view->notes = $format_date;
-                for($k = 1; $k <= 31; $k++) {
-//                    if($k == $format_date) {
-                        $this->view->notes = $month[5]; //put $k
-//                        $records = $month[$j];
-//                        $this->view->notes = $records;
-//                    }
+        $this->view->notes = $this->model->notes();
+        $data = $this->model->notes();
+
+        $dates8 = array();
+        $dates9 = array();
+        for($i = 0; $i < sizeof($data); $i++) {
+            if(!empty($data[$i])) {
+                $month = DateTime::createFromFormat('Y-m-d', $data[$i][date]);
+                $format_month = $month->format('n');
+                $format_day = $month->format('j');
+                switch ($format_month) {
+                    case 8:
+                        array_push($dates8, $data[$i]);
+                        $this->view->month8 = $dates8;
+                        break;
+                    case 9:
+                        array_push($dates9, $data[$i]);
+                        $this->view->month9 = $dates9;
+                        break;
                 }
             }
         }

@@ -12,13 +12,9 @@ class Dashboard_Model extends Model {
     }
 
     function notes() {
-        $data = array();
-        for($i = 1; $i <= 12; $i++) {
-            $sth = $this->db->prepare('SELECT * FROM notes where MONTH (date) = '.$i.' ORDER BY date');
+            $sth = $this->db->prepare('SELECT * FROM notes ORDER BY date');
             $sth->execute();
-            array_push($data, $sth->fetchAll(PDO::FETCH_ASSOC));
-        }
-        return $data;
+        return  $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function note($id) {

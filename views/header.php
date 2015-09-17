@@ -8,6 +8,7 @@
     <!-- jQuery Google CDN -->
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="<?php echo URL; ?>assets/css/castom.css">
     <!-- Google CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
     <script src="<?php echo URL; ?>assets/js/moment-with-locales.js"></script>
@@ -19,7 +20,6 @@
 <!--  salvattore grid  -->
     <style>
 
-
         @media screen and (min-width: 1px) and (max-width: 600px){
             #grid[data-columns]::before {
                 content: '1 .col .s12';
@@ -30,9 +30,14 @@
                 content: '3 .col m4';
             }
         }
-        @media screen and (min-width:993px) and (max-width: 9999px){
+        @media screen and (min-width:993px) and (max-width: 1370px){
             #grid[data-columns]::before {
                 content: '4 .col .l3';
+            }
+        }
+        @media screen and (min-width:1371px) and (max-width: 9999px){
+            #grid[data-columns]::before {
+                content: '6 .col .l2';
             }
         }
     </style>
