@@ -5,120 +5,57 @@ class Dashboard_Model extends Model {
         parent::__construct();
     }
 
-
     function ajax() {
         $sth = $this->db->prepare('SELECT date, account_cashier  FROM reports WHERE date >= (NOW() - INTERVAL 22 DAY);');
         $sth->execute();
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function earnedToday() {
-        //$sth = $this->db->prepare('SELECT * FROM  sold INNER JOIN goods  WHERE sold.good_id = goods.id AND DATE = CURDATE()');
-        $sth = $this->db->prepare('SELECT non_cash_payment, cash_payment, infusion FROM  reports WHERE DATE = CURDATE()');
-        $sth->execute();
-        return $sth->fetchAll(); //return into controller
+    function notes() {
+        $data = array();
+        for($i = 1; $i <= 12; $i++) {
+            $sth = $this->db->prepare('SELECT * FROM notes where MONTH(time) = '.$i.' ORDER BY time');
+            $sth->execute();
+            array_push($data, $sth->fetchAll(PDO::FETCH_ASSOC));
+        }
+        return $data;
     }
 
-    function earnedYesterday() {
-        $sth = $this->db->prepare('SELECT non_cash_payment, cash_payment, infusion FROM  reports WHERE DATE = (CURDATE() - 1)');
-        $sth->execute();
-        return $sth->fetchAll(); //return into controller
-    }
-
-    function debt() {
-        $sth = $this->db->prepare('SELECT SUM(sold_in_debt) AS loan, SUM(returned_to_duty) AS deposit FROM reports');
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function debtOfficeOktabrskaya() {
-        $sth = $this->db->prepare('SELECT sold_in_debt, returned_to_duty FROM reports WHERE shop = "Октябрьская"');
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function debtOfficePavlaMochalova() {
-        $sth = $this->db->prepare('SELECT sold_in_debt, returned_to_duty FROM reports WHERE shop = "Павла Мочалова"');
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function revenue() {
-        $sth = $this->db->prepare('SELECT * FROM reports WHERE date >= (NOW() - INTERVAL 22 DAY) ORDER BY date DESC');
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function expenditures() {
-        $sth = $this->db->prepare('SELECT * FROM reports ORDER BY date DESC');
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function bought($now, $previousWeek) {
-        $sth = $this->db->prepare('
-                SELECT goods.id, goods.isc_cost, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_bought
-                FROM (
-                SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought WHERE bought.date >= "'.$previousWeek.'" AND bought.date <= "'.$now.'"
-                GROUP BY bought.good_id
-                ) bought_alias
-                RIGHT JOIN goods ON goods.id = bought_alias.good_id
-                ORDER BY id;
-        ');
+    function note($id) {
+        $sth = $this->db->prepare('SELECT * FROM notes WHERE id ='.$id);
         $sth->execute();
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function sold($now, $previousWeek) {
-        $sth = $this->db->prepare('
-                SELECT goods.id, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_sold
-                FROM (
-                SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold WHERE bought.date >= "'.$previousWeek.'" AND bought.date <= "'.$now.'"
-                GROUP BY sold.good_id
-                ) sold_alias
-                RIGHT JOIN goods ON goods.id = sold_alias.good_id
-                ORDER BY id;
-        ');
-        $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    function create($data) {
+        $sth = $this->db->prepare('INSERT
+          INTO notes (time, place, name, phone, record)
+          VALUES (:time, :place, :name, :phone, :record)'
+        );
+        $sth->execute(array(
+            ':time' => $data['time'],
+            ':place' => $data['place'],
+            ':name' => $data['name'],
+            ':phone' => $data['phone'],
+            ':record' => $data['record'],
+        ));
     }
 
-    function relatedBought ($date) {
-        $sth = $this->db->prepare('SELECT SUM(related.related) AS related FROM related WHERE date <="'.$date.'"');
-        $sth->execute();
-        return $sth->fetchAll();
+    function save($data) {
+        $sth = $this->db->prepare('UPDATE notes SET time = :time, place = :place, name = :name, phone = :phone, record = :record WHERE id = :id');
+        $sth->execute(array(
+            ':id' => $data['id'],
+            ':time' => $data['time'],
+            ':place' => $data['place'],
+            ':name' => $data['name'],
+            ':phone' => $data['phone'],
+            ':record' => $data['record'],
+        ));
     }
 
-    function relatedSold ($date) {
-        $sth = $this->db->prepare('SELECT SUM(reports.related_products) AS related FROM reports WHERE date <="'.$date.'"');
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function items($date) {
-        $sth = $this->db->prepare('
-                SELECT goods.id, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_sold
-                FROM (
-                SELECT SUM(sold.quantity) AS total_sold, sold.good_id FROM sold WHERE sold.date >= "2015-08-01" AND sold.date <= "'.$date.'" GROUP BY sold.good_id
-                ) sold_alias
-                RIGHT JOIN goods ON goods.id = sold_alias.good_id
-                ORDER BY id;
-        ');
-        $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    function items2($date) {
-        $sth = $this->db->prepare('
-                SELECT goods.id, goods.isc_cost, goods.quantity_august_Mochalova, goods.quantity_august_Oktabrskaya, goods.name, total_bought
-                FROM (
-                SELECT SUM(bought.quantity) AS total_bought, bought.good_id FROM bought WHERE bought.date >= "2015-08-01" AND bought.date <= "'.$date.'" GROUP BY bought.good_id
-                ) bought_alias
-                RIGHT JOIN goods ON goods.id = bought_alias.good_id
-                ORDER BY id;
-        ');
-        $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    function delete($id) {
+        $sth = $this->db->prepare('DELETE from notes WHERE id = :id');
+        $sth->execute(array(':id' => $id));
     }
 
 }
