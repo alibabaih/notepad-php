@@ -1,11 +1,19 @@
+<script>
+
+</script>
 <div class="row">
     <div class="col offset-s1 s10 offset-m2 m8 offset-l4 l4">
         <div style="margin-top: 30px;" class="card">
             <div class="card-content">
                 <form method="post" action="<?php echo URL; ?>dashboard/create">
                     <div class="input-field col s12">
-                        <input value="2015-09-16 12:39:18" id="time" name="time" type="text" class="validate"
-                               placeholder="2015-09-16 12:39:18">
+                        <input value="" id="date" name="date" type="date" class="datepicker"
+                               placeholder="2015-09-16">
+                        <label class="active" for="date">Дата</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input value="" id="time" name="time" type="text" class="validate"
+                               placeholder="12:00">
                         <label class="active" for="time">Время</label>
                     </div>
                     <div class="input-field col s12">

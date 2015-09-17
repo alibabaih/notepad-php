@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!-- jQuery Google CDN -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="<?php echo URL; ?>assets/css/castom.css">
+
     <!-- Google CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <link rel="stylesheet" href="<?php echo URL; ?>assets/css/materialize.css">
+    <link href="<?php echo URL; ?>assets/css/castom.css">
     <script src="<?php echo URL; ?>assets/js/moment-with-locales.js"></script>
 
 

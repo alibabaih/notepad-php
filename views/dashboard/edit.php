@@ -4,9 +4,15 @@
             <div class="card-content">
                 <form method="post" action="<?php echo URL ?>dashboard/update/<?php echo $this->note[0][id]; ?>">
                     <div class="input-field col s12">
-                        <input value="<?php echo $this->note[0][time]; ?>" id="time" name="time" type="text"
+                        <input value="<?php echo $this->note[0][date]; ?>" id="date" name="date" type="date"
+                               class="datepicker"
+                               placeholder="2015-09-16">
+                        <label class="active" for="time">Дата</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input value="<?php echo substr($this->note[0][time],0,5); ?>" id="time" name="time" type="text"
                                class="validate"
-                               placeholder="2015-09-16 12:39:18">
+                               placeholder="12:00">
                         <label class="active" for="time">Время</label>
                     </div>
                     <div class="input-field col s12">

@@ -44,8 +44,12 @@ class Dashboard extends Controller {
     }
 
     function create() {
+        //2015-09-16
+        //12:39:18
+        $time = $_POST['time'] . ':'.'00';
         $data = array();
-        $data['time'] = $_POST['time'];
+        $data['date'] = $_POST['date'];
+        $data['time'] = $time;
         $data['place'] = $_POST['place'];
         $data['name'] = $_POST['name'];
         $data['phone'] = $_POST['phone'];
@@ -65,9 +69,11 @@ class Dashboard extends Controller {
     }
 
     function update($id) {
+        $time = $_POST['time'] . ':'.'00';
         $data = array();
         $data['id'] = $id;
-        $data['time'] = $_POST['time'];
+        $data['date'] = $_POST['date'];
+        $data['time'] = $time;
         $data['place'] = $_POST['place'];
         $data['name'] = $_POST['name'];
         $data['phone'] = $_POST['phone'];

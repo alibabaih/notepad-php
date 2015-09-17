@@ -2561,6 +2561,13 @@ nav ul a span.badge {
   overflow: hidden;
   text-overflow: ellipsis; }
 
+.truncate-show {
+  display: block;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .no-padding {
   padding: 0 !important; }
 

@@ -25,10 +25,11 @@ class Dashboard_Model extends Model {
 
     function create($data) {
         $sth = $this->db->prepare('INSERT
-          INTO notes (time, place, name, phone, record)
-          VALUES (:time, :place, :name, :phone, :record)'
+          INTO notes (date, time, place, name, phone, record)
+          VALUES (:date, :time, :place, :name, :phone, :record)'
         );
         $sth->execute(array(
+            ':date' => $data['date'],
             ':time' => $data['time'],
             ':place' => $data['place'],
             ':name' => $data['name'],
@@ -38,9 +39,10 @@ class Dashboard_Model extends Model {
     }
 
     function save($data) {
-        $sth = $this->db->prepare('UPDATE notes SET time = :time, place = :place, name = :name, phone = :phone, record = :record WHERE id = :id');
+        $sth = $this->db->prepare('UPDATE notes SET date = :date, time = :time, place = :place, name = :name, phone = :phone, record = :record WHERE id = :id');
         $sth->execute(array(
             ':id' => $data['id'],
+            ':date' => $data['date'],
             ':time' => $data['time'],
             ':place' => $data['place'],
             ':name' => $data['name'],
