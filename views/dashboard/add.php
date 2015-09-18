@@ -1,5 +1,4 @@
 <script>
-
 </script>
 <div class="row">
     <div class="col offset-s1 s10 offset-m2 m8 offset-l4 l4">
@@ -33,7 +32,7 @@
                     </div>
                     <div class="input-field col s12">
                         <input value="" id="phone" name="phone" type="text" class="validate"
-                               placeholder="8 904 923 93 09">
+                               placeholder="8 (904) 923-93-09">
                         <label class="active" for="phone">Мобильный телефон</label>
                     </div>
                     <div class="input-field col s12">

@@ -1,7 +1,8 @@
 <script src="<?php echo URL; ?>assets/js/salvattore.js"></script>
 <!-- App javascript -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+<script src="<?php echo URL; ?>assets/js/materialize.js"></script>
+<script src="<?php echo URL; ?>assets/js/underscore-min.js"></script>
 
 
 <script>
@@ -11,11 +12,15 @@
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year
-            format: 'yyyy-mm-dd'
+            format: 'yyyy-mm-dd',
+            firstDay: 1,
+            monthsShort: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ]
         });
         $('.collapsible').collapsible({
             accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
         });
+        $("#phone").mask("8 (999) 999-99-99",{placeholder:"0"});
+        $("#time").mask("99:99",{placeholder:"0"});
     });
 </script>
     </body>

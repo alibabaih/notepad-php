@@ -7,6 +7,7 @@
 
     <!-- jQuery Google CDN -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="<?php echo URL; ?>assets/js/jquery.maskedinput.js" type="text/javascript"></script>
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
