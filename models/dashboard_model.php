@@ -12,7 +12,7 @@ class Dashboard_Model extends Model {
     }
 
     function notes() {
-            $sth = $this->db->prepare('SELECT * FROM notes ORDER BY date');
+            $sth = $this->db->prepare('SELECT * FROM notes ORDER BY date ASC, time ASC');
             $sth->execute();
         return  $sth->fetchAll(PDO::FETCH_ASSOC);
     }

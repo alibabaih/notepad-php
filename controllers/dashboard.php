@@ -19,6 +19,9 @@ class Dashboard extends Controller {
 
         $dates8 = array();
         $dates9 = array();
+        $dates10 = array();
+        $dates11 = array();
+        $dates12 = array();
         for($i = 0; $i < sizeof($data); $i++) {
             if(!empty($data[$i])) {
                 $month = DateTime::createFromFormat('Y-m-d', $data[$i][date]);
@@ -32,6 +35,18 @@ class Dashboard extends Controller {
                     case 9:
                         array_push($dates9, $data[$i]);
                         $this->view->month9 = $dates9;
+                        break;
+                    case 10:
+                        array_push($dates10, $data[$i]);
+                        $this->view->month10 = $dates10;
+                        break;
+                    case 11:
+                        array_push($dates11, $data[$i]);
+                        $this->view->month11 = $dates11;
+                        break;
+                    case 12:
+                        array_push($dates12, $data[$i]);
+                        $this->view->month12 = $dates12;
                         break;
                 }
             }

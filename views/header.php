@@ -43,6 +43,18 @@
                 content: '6 .col .l2';
             }
         }
+
+
+
+
+        /*@media screen and (min-width: 1px) and (max-width: 6px){*/
+            /*#months-grid[data-columns]::before {*/
+                /*content: '3 .column.size-1of3';*/
+            /*}*/
+        /*}*/
+        /*.column { float: left; }*/
+        /*.size-1of3 { width: 33.333%; }*/
+
     </style>
 
 

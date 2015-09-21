@@ -9,7 +9,7 @@
 </ul>
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo center"><img src="<?php echo URL; ?>img/logo.png"></a>
+        <a href="<?php echo URL; ?>dashboard" class="brand-logo center" style="text-transform: uppercase; text-shadow: 0px 1px 2px rgba(150, 150, 150, 1); color: white; font-weight: 100;">Блокнот</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse" style="padding: 0 15px;"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="<?php echo URL ?>dashboard/add"><i class="material-icons">note_add</i></a></li>

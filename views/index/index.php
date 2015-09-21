@@ -2,7 +2,7 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo center">NotePad</a>
+        <a href="<?php echo URL; ?>" class="brand-logo center" style="text-transform: uppercase; text-shadow: 0px 1px 2px rgba(150, 150, 150, 1); color: white; font-weight: 100;">Блокнот</a>
     </div>
 </nav>
 

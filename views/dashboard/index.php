@@ -2,15 +2,6 @@
     function confirm_delete() {
         return confirm('Вы уверены?');
     }
-//    window.onload = function() {
-//        if (window.jQuery) {
-//            // jQuery is loaded
-//            alert("Yeah!");
-//        } else {
-//            // jQuery is not loaded
-//            alert("Doesn't Work");
-//        }
-//    }
     $(document).ready(function() {
         $('.tr').on('click', function() {
             $(this).toggleClass('truncate-show');
@@ -25,27 +16,33 @@
         height: 22px;
     }
 </style>
-<main style="background-color: #FCFCFC;">
+<main class="light-grey">
 
-    <ul style="margin: 0px 10px 0px 10px; border-top: 0px;" class="collapsible" data-collapsible="accordion">
+    <ul class="collapsible main-accordion" data-collapsible="accordion">
         <li>
             <div class="collapsible-header">
-                <h5 class="header" style="margin-top: auto; padding-top: 9px; font-weight: 300;color: #ee6e73; text-align: center;">Август</h5>
+                <h5 class="header">Август</h5>
             </div>
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12">
-                        <h6 class="header" style="margin-top: 15px; padding: 0 0.75rem; font-weight: 300;color: #757575; text-align: right; text-transform: uppercase;">Август</h6>
+                        <h6 class="header" style="float: left;">Календарь</h6>
+                        <h6 class="header">Август</h6>
+
+                        <div class="row"><div class="col s12 m12 l12" style="text-align: center;"><div style="    margin-top: 10px;display: inline-block; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 5px 0 rgba(0, 0, 0, 0.06);   background-color: #F7F7F7;border-radius: 2px;">
+                                    <?php for($i = 1; $i <= 31; $i++) { ?>
+                                        <p style="text-align: center;margin: 0;padding: 5px; float: left; width: 45px; height: 45px;"><a style="color:#505050;padding-top: 6px;display: block;" href="#<?php echo $i; ?>"><?php echo $i; ?></a></p>
+                                    <?php } ?>
+                                </div></div></div>
+
                         <?php foreach ($this->month8 as $key => $value): ?>
                             <div id="grid" data-columns>
                                 <div class="card">
-                                    <div style="margin-bottom: 15px;" class="row">
+                                    <div class="when" class="row">
                                         <div class="col s12">
-                                            <h5 style="font-weight: 300; text-align: center;">
-                                                <?php echo date('d.m.y', strtotime($value['date'])); ?>
-                                                в <?php echo substr($value['time'], 0, 5); ?>
-                                            </h5>
-                                            <small style="display: block; text-align: center">
+
+                                            <h5 class="date-time"><a name="<?php echo date('j', strtotime($value['date'])); ?>"></a><?php echo date('d.m.y', strtotime($value['date'])); ?> в <?php echo substr($value['time'], 0, 5); ?></h5>
+                                            <small class="where">
                                                 <?php if($value['place'] == 'SOME') { echo SOME; } ?>
                                                 <?php if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
                                                 <?php if($value['place'] == 'TOP') { echo TOP; } ?>
@@ -54,24 +51,18 @@
                                         </div>
                                     </div>
                                     <div class="divider"></div>
-                                    <p style="margin-bottom: 10px; font-weight: 500; color: #757575;" class="center-align"><?php echo $value['name']; ?></p>
-                                    <div style="background-color: rgba(224, 224, 224, 0.34);" class="divider person"></div>
-                                    <p style="margin-top:10px;  font-weight: 500; color: #757575;" class="center-align"><?php echo $value['phone']; ?></p>
+                                    <p class="center-align person"><?php echo $value['name']; ?></p>
+                                    <div class="divider person"></div>
+                                    <p class="center-align person"><?php echo $value['phone']; ?></p>
 
                                     <?php if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
-                                    <p style="margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr"><?php echo $value['record']; ?></p>
-
+                                    <p style="padding: inherit; margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr"><?php echo $value['record']; ?></p>
                                     <div class="divider"></div>
-                                    <div style="margin-bottom: 0px;" class="row">
+                                    <div class="row edit">
                                         <div class="col s12">
-                                <span style="text-align: center; display: block; margin: 15px;">
-                                <a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a>
-                                |
-                                <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a>
-                                </span>
+                                            <span class="edit"><a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a> | <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a></span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -81,48 +72,66 @@
         </li>
         <li>
             <div class="collapsible-header">
-                <h5 class="header" style="margin-top: auto; padding-top: 9px; font-weight: 300;color: #ee6e73; text-align: center;">1</h5>
+                <h5 class="header">Сентябрь</h5>
             </div>
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12">
-                        <h6 class="header" style="margin-top: 15px; padding: 0 0.75rem; font-weight: 300;color: #757575; text-align: right; text-transform: uppercase;">Сентябрь</h6>
+                        <h6 class="header" style="float: left;">Календарь</h6>
+                        <h6 class="header">Сентябрь</h6>
+
+                        <div class="row">
+                            <div class="col s12 m12 l12" style="text-align: center;">
+                                <div style="margin-top: 10px;display: inline-block; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 5px 0 rgba(0, 0, 0, 0.06);   background-color: #F7F7F7;border-radius: 2px;">
+                                    <?php for($i = 1; $i <= 31; $i++) { ?>
+                                        <p style="text-align: center;margin: 0;padding: 5px; float: left; width: 45px; height: 45px;"><a style="color:#505050;padding-top: 6px;display: block;" href="#<?php echo $i; ?>"><?php echo $i; ?></a></p>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+<!--                        <pre>--><?php //print_r($this->month9);?><!--</pre>-->
+
+                        <?php $time_array = array(
+                              '09:00', '09:15', '09:30', '09:45'
+                            , '10:00', '10:15', '10:30', '10:45'
+                            , '11:00', '11:15', '11:30', '11:45'
+                            , '12:00', '12:15', '12:30', '12:45'
+                            , '13:00', '13:15', '13:30', '13:45'
+                            , '14:00', '14:15', '14:30', '14:45'
+                            , '15:00', '15:15', '15:30', '15:45'
+                            , '16:00', '16:15', '16:30', '16:45'
+                            , '17:00', '17:15', '17:30', '17:45'
+                            , '18:00', '18:15', '18:30', '18:45'
+                        );
+                        ?>
                         <?php foreach ($this->month9 as $key => $value): ?>
                             <div id="grid" data-columns>
+
                                 <div class="card">
-                                    <div style="margin-bottom: 15px;" class="row">
+                                    <div class="when" class="row">
                                         <div class="col s12">
-                                            <h5 style="font-weight: 300; text-align: center;">
-                                                <?php echo date('d.m.y', strtotime($value['date'])); ?>
-                                                в <?php echo substr($value['time'], 0, 5); ?>
-                                            </h5>
-                                            <small style="display: block; text-align: center">
+                                            <h5 class="date-time"><a name="<?php echo date('j', strtotime($value['date'])); ?>"></a><?php echo date('d.m.y', strtotime($value['date'])); ?> в <?php echo substr($value['time'], 0, 5); ?></h5>
+                                            <small class="where">
                                                 <?php if($value['place'] == 'SOME') { echo SOME; } ?>
-                                                <?php if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
-                                                <?php if($value['place'] == 'TOP') { echo TOP; } ?>
+                                                <?php if($value['place'] == 'BOTTOM') { echo 'Павла Мочалова'; } ?>
+                                                <?php if($value['place'] == 'TOP') { echo 'Октябрьская'; } ?>
                                                 <?php if($value['place'] == 'EMPTY_FIELD') { echo EMPTY_FIELD; } ?>
                                             </small>
                                         </div>
                                     </div>
                                     <div class="divider"></div>
-                                    <p style="padding: inherit; margin: 10px 0 10px 0; font-weight: 500; color: #757575;" class="center-align"><?php echo $value['name']; ?></p>
-                                    <div style="background-color: rgba(224, 224, 224, 0.34);" class="divider person"></div>
-                                    <p style="padding: inherit; margin: 10px 0 10px 0; font-weight: 500; color: #757575;" class="center-align"><?php echo $value['phone']; ?></p>
+                                    <p class="center-align person"><?php echo $value['name']; ?></p>
+                                    <div class="divider person"></div>
+                                    <p class="center-align person"><?php echo $value['phone']; ?></p>
 
                                     <?php if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
                                     <p style="padding: inherit; margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr"><?php echo $value['record']; ?></p>
-
                                     <div class="divider"></div>
-                                    <div style="margin-bottom: 0px;" class="row">
+                                    <div class="row edit">
                                         <div class="col s12">
-                                <span style="text-align: center; display: block; margin: 15px;">
-                                <a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a>
-                                |
-                                <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a>
-                                </span>
+                                            <span class="edit"><a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a> | <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a></span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -132,22 +141,28 @@
         </li>
         <li>
             <div class="collapsible-header">
-                <h5 class="header" style="margin-top: auto; padding-top: 9px; font-weight: 300;color: #ee6e73; text-align: center;">Октябрь</h5>
+                <h5 class="header">Октябрь</h5>
             </div>
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12">
-                        <h6 class="header" style="margin-top: 15px; padding: 0 0.75rem; font-weight: 300;color: #757575; text-align: right; text-transform: uppercase;">Сентябрь</h6>
-                        <?php foreach ($this->month9 as $key => $value): ?>
+                        <h6 class="header" style="float: left;">Календарь</h6>
+                        <h6 class="header">Октябрь</h6>
+
+                        <div class="row"><div class="col s12 m12 l12" style="text-align: center;"><div style="    margin-top: 10px;display: inline-block; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 5px 0 rgba(0, 0, 0, 0.06);   background-color: #F7F7F7;border-radius: 2px;">
+                                    <?php for($i = 1; $i <= 31; $i++) { ?>
+                                        <p style="text-align: center;margin: 0;padding: 5px; float: left; width: 45px; height: 45px;"><a style="color:#505050;padding-top: 6px;display: block;" href="#<?php echo $i; ?>"><?php echo $i; ?></a></p>
+                                    <?php } ?>
+                                </div></div></div>
+
+                        <?php foreach ($this->month10 as $key => $value): ?>
                             <div id="grid" data-columns>
                                 <div class="card">
-                                    <div style="margin-bottom: 15px;" class="row">
+                                    <div class="when" class="row">
                                         <div class="col s12">
-                                            <h5 style="font-weight: 300; text-align: center;">
-                                                <?php echo date('d.m.y', strtotime($value['date'])); ?>
-                                                в <?php echo substr($value['time'], 0, 5); ?>
-                                            </h5>
-                                            <small style="display: block; text-align: center">
+
+                                            <h5 class="date-time"><a name="<?php echo date('j', strtotime($value['date'])); ?>"></a><?php echo date('d.m.y', strtotime($value['date'])); ?> в <?php echo substr($value['time'], 0, 5); ?></h5>
+                                            <small class="where">
                                                 <?php if($value['place'] == 'SOME') { echo SOME; } ?>
                                                 <?php if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
                                                 <?php if($value['place'] == 'TOP') { echo TOP; } ?>
@@ -156,24 +171,120 @@
                                         </div>
                                     </div>
                                     <div class="divider"></div>
-                                    <p style="padding: inherit; margin: 10px 0 10px 0; font-weight: 500; color: #757575;" class="center-align"><?php echo $value['name']; ?></p>
-                                    <div style="background-color: rgba(224, 224, 224, 0.34);" class="divider person"></div>
-                                    <p style="padding: inherit; margin: 10px 0 10px 0; font-weight: 500; color: #757575;" class="center-align"><?php echo $value['phone']; ?></p>
+                                    <p class="center-align person"><?php echo $value['name']; ?></p>
+                                    <div class="divider person"></div>
+                                    <p class="center-align person"><?php echo $value['phone']; ?></p>
 
                                     <?php if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
                                     <p style="padding: inherit; margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr"><?php echo $value['record']; ?></p>
-
                                     <div class="divider"></div>
-                                    <div style="margin-bottom: 0px;" class="row">
+                                    <div class="row edit">
                                         <div class="col s12">
-                                <span style="text-align: center; display: block; margin: 15px;">
-                                <a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a>
-                                |
-                                <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a>
-                                </span>
+                                            <span class="edit"><a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a> | <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a></span>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="collapsible-header">
+                <h5 class="header">Ноябрь</h5>
+            </div>
+            <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s12">
+                        <h6 class="header" style="float: left;">Календарь</h6>
+                        <h6 class="header">Ноябрь</h6>
 
+                        <div class="row"><div class="col s12 m12 l12" style="text-align: center;"><div style="    margin-top: 10px;display: inline-block; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 5px 0 rgba(0, 0, 0, 0.06);   background-color: #F7F7F7;border-radius: 2px;">
+                                    <?php for($i = 1; $i <= 31; $i++) { ?>
+                                        <p style="text-align: center;margin: 0;padding: 5px; float: left; width: 45px; height: 45px;"><a style="color:#505050;padding-top: 6px;display: block;" href="#<?php echo $i; ?>"><?php echo $i; ?></a></p>
+                                    <?php } ?>
+                                </div></div></div>
+
+                        <?php foreach ($this->month11 as $key => $value): ?>
+                            <div id="grid" data-columns>
+                                <div class="card">
+                                    <div class="when" class="row">
+                                        <div class="col s12">
+
+                                            <h5 class="date-time"><a name="<?php echo date('j', strtotime($value['date'])); ?>"></a><?php echo date('d.m.y', strtotime($value['date'])); ?> в <?php echo substr($value['time'], 0, 5); ?></h5>
+                                            <small class="where">
+                                                <?php if($value['place'] == 'SOME') { echo SOME; } ?>
+                                                <?php if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
+                                                <?php if($value['place'] == 'TOP') { echo TOP; } ?>
+                                                <?php if($value['place'] == 'EMPTY_FIELD') { echo EMPTY_FIELD; } ?>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <p class="center-align person"><?php echo $value['name']; ?></p>
+                                    <div class="divider person"></div>
+                                    <p class="center-align person"><?php echo $value['phone']; ?></p>
+
+                                    <?php if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
+                                    <p style="padding: inherit; margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr"><?php echo $value['record']; ?></p>
+                                    <div class="divider"></div>
+                                    <div class="row edit">
+                                        <div class="col s12">
+                                            <span class="edit"><a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a> | <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="collapsible-header">
+                <h5 class="header">Декабрь</h5>
+            </div>
+            <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s12">
+                        <h6 class="header" style="float: left;">Календарь</h6>
+                        <h6 class="header">Декабрь</h6>
+
+                        <div class="row"><div class="col s12 m12 l12" style="text-align: center;"><div style="    margin-top: 10px;display: inline-block; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 5px 0 rgba(0, 0, 0, 0.06);   background-color: #F7F7F7;border-radius: 2px;">
+                                    <?php for($i = 1; $i <= 31; $i++) { ?>
+                                        <p style="text-align: center;margin: 0;padding: 5px; float: left; width: 45px; height: 45px;"><a style="color:#505050;padding-top: 6px;display: block;" href="#<?php echo $i; ?>"><?php echo $i; ?></a></p>
+                                    <?php } ?>
+                                </div></div></div>
+
+                        <?php foreach ($this->month12 as $key => $value): ?>
+                            <div id="grid" data-columns>
+                                <div class="card">
+                                    <div class="when" class="row">
+                                        <div class="col s12">
+
+                                            <h5 class="date-time"><a name="<?php echo date('j', strtotime($value['date'])); ?>"></a><?php echo date('d.m.y', strtotime($value['date'])); ?> в <?php echo substr($value['time'], 0, 5); ?></h5>
+                                            <small class="where">
+                                                <?php if($value['place'] == 'SOME') { echo SOME; } ?>
+                                                <?php if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
+                                                <?php if($value['place'] == 'TOP') { echo TOP; } ?>
+                                                <?php if($value['place'] == 'EMPTY_FIELD') { echo EMPTY_FIELD; } ?>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <p class="center-align person"><?php echo $value['name']; ?></p>
+                                    <div class="divider person"></div>
+                                    <p class="center-align person"><?php echo $value['phone']; ?></p>
+
+                                    <?php if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
+                                    <p style="padding: inherit; margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr"><?php echo $value['record']; ?></p>
+                                    <div class="divider"></div>
+                                    <div class="row edit">
+                                        <div class="col s12">
+                                            <span class="edit"><a style="color: #757575;" onclick="confirm_delete()" href="<?php echo URL; ?>dashboard/delete/<?php echo $value['id']; ?>">Удалить</a> | <a style="color: #757575;" href="<?php echo URL; ?>dashboard/edit/<?php echo $value['id']; ?>">Изменить</a></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -182,125 +293,30 @@
             </div>
         </li>
     </ul>
-
-
-
-<!--    <div class="row">-->
-<!--        <div class="col s12">-->
-<!--            <h2 class="header" style="font-weight: 300;color: #ee6e73; text-align: center;">Август</h2>-->
-<!--            --><?php //foreach ($this->month8 as $key => $value): ?>
-<!--                <div id="grid" data-columns>-->
-<!--                    <div class="card">-->
-<!--                        <div style="margin-bottom: 15px;" class="row">-->
-<!--                            <div class="col s12">-->
-<!--                                <h5 style="font-weight: 300; text-align: center;">-->
-<!--                                    --><?php //echo date('d.m.y', strtotime($value['date'])); ?>
-<!--                                    в --><?php //echo substr($value['time'], 0, 5); ?>
-<!--                                </h5>-->
-<!--                                <small style="display: block; text-align: center">-->
-<!--                                    --><?php //if($value['place'] == 'SOME') { echo SOME; } ?>
-<!--                                    --><?php //if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
-<!--                                    --><?php //if($value['place'] == 'TOP') { echo TOP; } ?>
-<!--                                    --><?php //if($value['place'] == 'EMPTY_FIELD') { echo EMPTY_FIELD; } ?>
-<!--                                </small>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="divider"></div>-->
-<!--                        <p style="margin-bottom: 10px; font-weight: 500; color: #757575;" class="center-align">--><?php //echo $value['name']; ?><!--</p>-->
-<!--                        <div style="background-color: rgba(224, 224, 224, 0.34);" class="divider person"></div>-->
-<!--                        <p style="margin-top:10px;  font-weight: 500; color: #757575;" class="center-align">--><?php //echo $value['phone']; ?><!--</p>-->
-<!---->
-<!--                        --><?php //if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
-<!--                        <p style="margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr">--><?php //echo $value['record']; ?><!--</p>-->
-<!---->
-<!--                        <div class="divider"></div>-->
-<!--                        <div style="margin-bottom: 0px;" class="row">-->
-<!--                            <div class="col s12">-->
-<!--                                <span style="text-align: center; display: block; margin: 15px;">-->
-<!--                                <a style="color: #757575;" onclick="confirm_delete()" href="--><?php //echo URL; ?><!--dashboard/delete/--><?php //echo $value['id']; ?><!--">Удалить</a>-->
-<!--                                |-->
-<!--                                <a style="color: #757575;" href="--><?php //echo URL; ?><!--dashboard/edit/--><?php //echo $value['id']; ?><!--">Изменить</a>-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!---->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            --><?php //endforeach; ?>
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!--    <div class="divider"></div>-->
-<!---->
-<!--    <div class="row">-->
-<!--        <div class="col s12">-->
-<!--            <h4 class="header" style="font-weight: 300;color: #757575; text-align: right; text-transform: uppercase;">Сентябрь</h4>-->
-<!--            --><?php //foreach ($this->month9 as $key => $value): ?>
-<!--                <div id="grid" data-columns>-->
-<!--                    <div class="card">-->
-<!--                        <div style="margin-bottom: 15px;" class="row">-->
-<!--                            <div class="col s12">-->
-<!--                                <h5 style="font-weight: 300; text-align: center;">-->
-<!--                                    --><?php //echo date('d.m.y', strtotime($value['date'])); ?>
-<!--                                    в --><?php //echo substr($value['time'], 0, 5); ?>
-<!--                                </h5>-->
-<!--                                <small style="display: block; text-align: center">-->
-<!--                                    --><?php //if($value['place'] == 'SOME') { echo SOME; } ?>
-<!--                                    --><?php //if($value['place'] == 'BOTTOM') { echo BOTTOM; } ?>
-<!--                                    --><?php //if($value['place'] == 'TOP') { echo TOP; } ?>
-<!--                                    --><?php //if($value['place'] == 'EMPTY_FIELD') { echo EMPTY_FIELD; } ?>
-<!--                                </small>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="divider"></div>-->
-<!--                        <p style="margin-bottom: 10px; font-weight: 500; color: #757575;" class="center-align">--><?php //echo $value['name']; ?><!--</p>-->
-<!--                        <div style="background-color: rgba(224, 224, 224, 0.34);" class="divider person"></div>-->
-<!--                        <p style="margin-top:10px;  font-weight: 500; color: #757575;" class="center-align">--><?php //echo $value['phone']; ?><!--</p>-->
-<!---->
-<!--                        --><?php //if(empty($value['record'])) { echo '<div class="empty-record"></div>'; } ?>
-<!--                        <p style="margin: 0px 15px 20px 15px; color: #757575; text-align: center;" class="truncate tr">--><?php //echo $value['record']; ?><!--</p>-->
-<!---->
-<!--                        <div class="divider"></div>-->
-<!--                        <div style="margin-bottom: 0px;" class="row">-->
-<!--                            <div class="col s12">-->
-<!--                                <span style="text-align: center; display: block; margin: 15px;">-->
-<!--                                <a style="color: #757575;" onclick="confirm_delete()" href="--><?php //echo URL; ?><!--dashboard/delete/--><?php //echo $value['id']; ?><!--">Удалить</a>-->
-<!--                                |-->
-<!--                                <a style="color: #757575;" href="--><?php //echo URL; ?><!--dashboard/edit/--><?php //echo $value['id']; ?><!--">Изменить</a>-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!---->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            --><?php //endforeach; ?>
-<!--        </div>-->
-<!--    </div>-->
-
 </main>
 
+<a style="position: fixed;bottom: 0;right: 0;border-radius: 2px;background-color: #EE6E73;margin-right: 10px;margin-bottom: 10px;" class="btn-floating btn-large waves-effect waves-light" href="<?php echo URL ?>dashboard/add"><i class="material-icons">note_add</i></a>
 
 <script>
     $(document).ready(function() {
         moment.locale("ru");
-        //var month_now = moment().format('MMMM');
-        var month_now = 1;
+        var months = {1: "Январь",2: "Февраль", 3: "Март",4: "Апрель", 5: "Май", 6: "Июнь", 7: "Июль", 8: "Август", 9: "Сентябрь", 10: "Октябрь", 11: "Ноябрь", 12: "Декабрь"};
+        var month_now = moment().format("M"); //get current month number
 
         $('h5.header').each(function() {
-            var month = $(this).text();
-            parseInt(month);
-            console.log(typeof month);
-            console.log(typeof month_now);
-            var i = (month == month_now);
-            console.log(i);
-            if(month == month_now) {
+            var month = $(this).text(); console.log(month);
+            var intMonth = monthToNumber(month); //parseInt(month);console.log(typeof month); console.log(typeof month_now);var i = (month == month_now);console.log(i);
+            if(intMonth == month_now) {
                 $(this).parent().addClass('active');
             }
-
-
-
-
         });
+        function monthToNumber(month) {
+            for(var i = 1; i <= 12; i++) {
+                if(months[i] == month) {
+                    return i; //console.log('--' + i);
+                }
+            }
+        }
 
     });
 </script>
