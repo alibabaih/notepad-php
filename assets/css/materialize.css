@@ -8225,8 +8225,8 @@ h6.header {
 }
 .when {margin-bottom: 15px;}
 .date-time {font-weight: 300; text-align: center;}
-.where {display: block; text-align: center}
+.where {}
 p.person {padding: inherit; margin: 10px 0 10px 0; font-weight: 500; color: #757575;}
 div.person {background-color: rgba(224, 224, 224, 0.34);}
-span.edit {text-align: center; display: block; margin: 15px;}
+span.edit {text-align: center; display: block;}
 div.edit {margin-bottom: 0px;}

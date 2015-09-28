@@ -17,6 +17,12 @@ class Dashboard_Model extends Model {
         return  $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function notesByMonth($month) {
+        $sth = $this->db->prepare('SELECT * FROM notes WHERE MONTH(date) = '.$month.' ORDER BY date ASC, time ASC');
+        $sth->execute();
+        return  $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function note($id) {
         $sth = $this->db->prepare('SELECT * FROM notes WHERE id ='.$id);
         $sth->execute();

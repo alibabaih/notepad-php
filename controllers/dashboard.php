@@ -13,6 +13,8 @@ class Dashboard extends Controller {
     }
 
     function index() {
+        $month = 9;
+        $this->view->notesSeptember = $this->model->notesByMonth($month);
 
         $this->view->notes = $this->model->notes();
         $data = $this->model->notes();
@@ -52,6 +54,10 @@ class Dashboard extends Controller {
             }
         }
         $this->view->render('dashboard/index');
+    }
+
+    function test() {
+        $this->view->render('dashboard/test');
     }
 
     function add() {
