@@ -60,6 +60,47 @@ class Dashboard extends Controller {
         $this->view->render('dashboard/test');
     }
 
+    function index2() {
+        $this->view->notes = $this->model->notes();
+        $data = $this->model->notes();
+
+        $dates8 = array();
+        $dates9 = array();
+        $dates10 = array();
+        $dates11 = array();
+        $dates12 = array();
+        for($i = 0; $i < sizeof($data); $i++) {
+            if(!empty($data[$i])) {
+                $month = DateTime::createFromFormat('Y-m-d', $data[$i][date]);
+                $format_month = $month->format('n');
+                $format_day = $month->format('j');
+                switch ($format_month) {
+                    case 8:
+                        array_push($dates8, $data[$i]);
+                        $this->view->month8 = $dates8;
+                        break;
+                    case 9:
+                        array_push($dates9, $data[$i]);
+                        $this->view->month9 = $dates9;
+                        break;
+                    case 10:
+                        array_push($dates10, $data[$i]);
+                        $this->view->month10 = $dates10;
+                        break;
+                    case 11:
+                        array_push($dates11, $data[$i]);
+                        $this->view->month11 = $dates11;
+                        break;
+                    case 12:
+                        array_push($dates12, $data[$i]);
+                        $this->view->month12 = $dates12;
+                        break;
+                }
+            }
+        }
+        $this->view->render('dashboard/index2');
+    }
+
     function add() {
         $this->view->render('dashboard/add');
     }

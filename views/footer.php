@@ -3,7 +3,8 @@
 
 <script src="<?php echo URL; ?>assets/js/materialize.js"></script>
 <script src="<?php echo URL; ?>assets/js/underscore-min.js"></script>
-
+<script src="//code.angularjs.org/1.4.6/angular.min.js"></script>
+<script src="<?php echo URL; ?>assets/js/app.js"></script>
 
 <script>
     $(document).ready(function() {

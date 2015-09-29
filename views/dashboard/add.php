@@ -15,13 +15,15 @@
                                placeholder="12:00">
                         <label class="active" for="time">Время</label>
                     </div>
+
                     <div class="input-field col s12">
                         <select name="place">
-                            <option value="" disabled selected>Приём будет проходить</option>
-                            <option value="EMPTY"><?php echo EMPTY_FIELD; ?></option>
-                            <option value="SOME"><?php echo SOME; ?></option>
-                            <option value="BOTTOM"><?php echo BOTTOM; ?></option>
-                            <option value="TOP"><?php echo TOP; ?></option>
+                            <option value="" disabled>Приём будет проходить</option>
+                            <?php if (Session::get('role') == 'default'): ?>
+                                <option value="<?php echo Session::get('office'); ?>" selected><?php echo Session::get('office'); ?></option>
+                            <?php endif; ?>
+                            <option value="BOTTOM">Павла Мочалова</option>
+                            <option value="TOP">Октябрьская</option>
                         </select>
                         <label>Место проведения</label>
                     </div>
